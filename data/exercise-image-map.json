@@ -1,0 +1,36 @@
+{
+  "cat-cow": {
+    "start": "assets/exercises/cat_cow_start.webp"
+  },
+  "goblet-squat": {
+    "start": "assets/exercises/goblet_squat_start.webp",
+    "end": "assets/exercises/goblet_squat_end.webp"
+  },
+  "push-up": {
+    "start": "assets/exercises/push_up_start.webp",
+    "end": "assets/exercises/push_up_end.webp"
+  },
+  "reverse-lunge": {
+    "start": "assets/exercises/reverse_lunge_start.webp",
+    "end": "assets/exercises/reverse_lunge_end.webp"
+  },
+  "split-squat": {
+    "start": "assets/exercises/split_squat_start.webp",
+    "end": "assets/exercises/split_squat_end.webp"
+  },
+  "glute-bridge": {
+    "start": "assets/exercises/glute_bridge_start.webp",
+    "end": "assets/exercises/glute_bridge_end.webp"
+  },
+  "bird-dog": {
+    "start": "assets/exercises/bird_dog_start.webp",
+    "end": "assets/exercises/bird_dog_end.webp"
+  },
+  "dead-bug": {
+    "start": "assets/exercises/dead_bug_start.webp",
+    "end": "assets/exercises/dead_bug_end.webp"
+  },
+  "child-pose": {
+    "start": "assets/exercises/child_pose_start.webp"
+  }
+}
