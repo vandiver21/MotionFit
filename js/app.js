@@ -108,6 +108,10 @@ const replaceModal = document.getElementById("replaceModal");
 const closeReplaceModal = document.getElementById("closeReplaceModal");
 const replaceModalDescription = document.getElementById("replaceModalDescription");
 const replacementOptions = document.getElementById("replacementOptions");
+const blockSettingsModal = document.getElementById("blockSettingsModal");
+const blockSettingsTitle = document.getElementById("blockSettingsTitle");
+const blockSettingsContent = document.getElementById("blockSettingsContent");
+const closeBlockSettings = document.getElementById("closeBlockSettings");
 const progressLabel = document.getElementById("progressLabel");
 const progressPercent = document.getElementById("progressPercent");
 const progressBar = document.getElementById("progressBar");
@@ -148,6 +152,7 @@ let timerId = null;
 let endTime = null;
 let activeExercisePresentation = "";
 let activeReplacementIndex = null;
+let activeBlockSettingsIndex = null;
 let activeSession = null;
 
 const workoutHistoryKey = "motionfit.workoutHistory";
@@ -178,10 +183,13 @@ async function loadExerciseCatalog(){
 
   return catalog.map(exercise => {
     const mappedImages = imageMap[exercise.id] || {};
+    const supportsReps = ["strength", "core"].includes(exercise.category);
     return {
       ...exercise,
       imageStart:exercise.imageStart || mappedImages.start,
-      imageEnd:exercise.imageEnd || mappedImages.end
+      imageEnd:exercise.imageEnd || mappedImages.end,
+      mode:exercise.mode === "reps" ? "reps" : "time",
+      defaultReps:Number.isFinite(exercise.defaultReps) ? exercise.defaultReps : (supportsReps ? 12 : null)
     };
   });
 }
@@ -202,7 +210,7 @@ function pickExercises(category, count, energy, seed, usedIds = new Set()){
 }
 
 function createBlock(phase, label, exercises, rounds = 1, type = "standard"){
-  return { phase, label, exercises, rounds, type };
+  return { phase, label, exercises, rounds, type, skipped:false, mode:"time", workTime:null, restExercise:null, restSuperset:null, reps:null };
 }
 
 function generateSession(duration, energy){
@@ -252,12 +260,44 @@ function getExerciseDuration(exercise, phase = ""){
   return workoutConfig.workTime;
 }
 
-function getScheduledDuration(exercise, phase){
-  return exercise.durationOverride ?? getExerciseDuration(exercise, phase);
+function getBlockWorkTime(block){
+  return block.workTime ?? getExerciseDuration(block.exercises[0], block.phase);
+}
+
+function getBlockReps(block){
+  return block.reps ?? block.exercises[0]?.defaultReps ?? 12;
+}
+
+function getBlockRestExercise(block){
+  return block.restExercise ?? workoutConfig.restExercise;
+}
+
+function getBlockRestSuperset(block){
+  return block.restSuperset ?? workoutConfig.restSuperset;
+}
+
+function getScheduledDuration(exercise, block){
+  return block.workTime ?? exercise.durationOverride ?? getExerciseDuration(exercise, block.phase);
+}
+
+function blockSupportsReps(block){
+  return block.exercises.length > 0 && block.exercises.every(exercise => Number.isFinite(exercise.defaultReps));
+}
+
+function isTimedBlock(block){
+  return block.mode !== "reps" || !blockSupportsReps(block);
+}
+
+function getBlockSummary(block){
+  const exerciseValue = isTimedBlock(block) ? `${getBlockWorkTime(block)}s` : `${getBlockReps(block)} reps`;
+  if(block.type === "superset" || block.type === "conditioning"){
+    return `${exerciseValue} · ${getBlockRestSuperset(block)}s descanso`;
+  }
+  return exerciseValue;
 }
 
 function getSessionRounds(){
-  return generatedBlocks.reduce((total, block) => total + block.rounds, 0);
+  return generatedBlocks.filter(block => !block.skipped).reduce((total, block) => total + block.rounds, 0);
 }
 
 function updateProgress(){
@@ -305,22 +345,25 @@ function showCompletionScreen(){
 
 function createWorkoutTimeline(blocks){
   const timeline = [];
+  const activeBlocks = blocks.filter(block => !block.skipped);
 
-  blocks.forEach((block, blockIndex) => {
+  activeBlocks.forEach((block, blockIndex) => {
     for(let round = 1; round <= block.rounds; round += 1){
       block.exercises.forEach((exercise, exerciseIndex) => {
         const isLastExercise = exerciseIndex === block.exercises.length - 1;
         const isLastRound = round === block.rounds;
-        const hasNextBlock = blockIndex < blocks.length - 1;
+        const hasNextBlock = blockIndex < activeBlocks.length - 1;
         const isRoundBlock = block.type === "superset" || block.type === "conditioning";
         const restAfter = isRoundBlock
-          ? (isLastExercise ? ((isLastRound && !hasNextBlock) ? 0 : workoutConfig.restSuperset) : workoutConfig.restExercise)
-          : (!isLastExercise ? workoutConfig.restExercise : (hasNextBlock ? workoutConfig.restExercise : 0));
+          ? (isLastExercise ? ((isLastRound && !hasNextBlock) ? 0 : getBlockRestSuperset(block)) : getBlockRestExercise(block))
+          : (!isLastExercise ? getBlockRestExercise(block) : (hasNextBlock ? getBlockRestExercise(block) : 0));
 
         timeline.push({
           ...exercise,
           phase:block.phase,
-          duration:getScheduledDuration(exercise, block.phase),
+          duration:getScheduledDuration(exercise, block),
+          mode:isTimedBlock(block) ? "time" : "reps",
+          reps:isTimedBlock(block) ? null : getBlockReps(block),
           restAfter,
           round:block.rounds > 1 ? round : null
         });
@@ -329,6 +372,17 @@ function createWorkoutTimeline(blocks){
   });
 
   return timeline;
+}
+
+function getEffectiveDurationSeconds(blocks){
+  return createWorkoutTimeline(blocks).reduce((total, exercise) => {
+    const workDuration = exercise.mode === "reps" ? exercise.reps * 3 : exercise.duration;
+    return total + workDuration + exercise.restAfter;
+  }, 0);
+}
+
+function getEffectiveDurationMinutes(blocks){
+  return Math.max(1, Math.round(getEffectiveDurationSeconds(blocks) / 60));
 }
 
 function equipmentLabel(equipment){
@@ -353,37 +407,88 @@ function renderExerciseThumbnail(exercise){
   `;
 }
 
-function renderRoutine(blocks, duration){
-  const exerciseCount = blocks.reduce((total, block) => total + block.exercises.length, 0);
-  const supersetCount = blocks.filter(block => block.type === "superset").length;
+function renderRoutine(blocks){
+  const activeBlocks = blocks.filter(block => !block.skipped);
+  const effectiveDuration = getEffectiveDurationMinutes(blocks);
+  const exerciseCount = activeBlocks.reduce((total, block) => total + block.exercises.length * block.rounds, 0);
+  const supersetCount = activeBlocks.filter(block => block.type === "superset").length;
   let exerciseIndex = 0;
-  const blockMarkup = blocks.map(block => `
-    <div class="routineBlock ${block.type !== "standard" ? "routineBlock--superset" : ""}">
-      <div class="routineBlockHeading"><h3>${block.label}${block.rounds > 1 ? ` <span>×${block.rounds}</span>` : ""}</h3>${block.rounds > 1 ? `<small>${block.rounds} rondas</small>` : ""}</div>
+  const blockMarkup = blocks.map((block, blockIndex) => `
+    <div class="routineBlock ${block.type !== "standard" ? "routineBlock--superset" : ""}${block.skipped ? " is-skipped" : ""}">
+      <div class="routineBlockHeading"><div><h3>${block.label}${block.rounds > 1 ? ` <span>×${block.rounds}</span>` : ""}</h3><small class="blockSummary">${block.skipped ? "Ya realizado" : getBlockSummary(block)}</small></div><div class="blockHeaderActions">${["Warm-up", "Stretch"].includes(block.phase) ? `<label class="blockSkipToggle"><input type="checkbox" data-skip-block="${blockIndex}"${block.skipped ? " checked" : ""}><span>Ya realizado</span></label>` : ""}<button class="blockSettingsBtn" type="button" data-block-settings="${blockIndex}" aria-label="Ajustar ${block.label}">⚙</button></div></div>
       ${block.exercises.map(exercise => {
         const index = exerciseIndex++;
+        const exerciseDetail = isTimedBlock(block) ? `${getScheduledDuration(exercise, block)}s` : `${getBlockReps(block)} reps`;
         return `
         <div class="routineExerciseRow">
           ${renderExerciseThumbnail(exercise)}
-          <div class="routineExerciseName"><strong>${exercise.name}</strong><span>${getScheduledDuration(exercise, block.phase)}s · Nivel ${exercise.level}</span></div>
+          <div class="routineExerciseName"><strong>${exercise.name}</strong><span>${exerciseDetail} · Nivel ${exercise.level}</span></div>
           <span class="equipmentBadge">${equipmentLabel(exercise.equipment)}</span>
           <button class="replaceExerciseBtn" type="button" data-exercise-index="${index}">Sustituir</button>
         </div>
       `;
       }).join("")}
-      ${block.type !== "standard" ? `<div class="supersetRest">Descanso entre rondas · ${workoutConfig.restSuperset}s</div>` : ""}
+      ${block.type !== "standard" && !block.skipped ? `<div class="supersetRest">Descanso entre rondas · ${getBlockRestSuperset(block)}s</div>` : ""}
     </div>
   `).join("");
 
   routineCard.innerHTML = `
     <div class="routineMetrics" aria-label="Resumen del entrenamiento">
-      <div><strong>⏱ ${duration} min</strong><span>Duración</span></div>
+      <div><strong>⏱ ${effectiveDuration} min</strong><span>Duración</span></div>
       <div><strong>💪 ${exerciseCount} ex</strong><span>Ejercicios</span></div>
       <div><strong>🔁 ${supersetCount} SS</strong><span>Superseries</span></div>
-      <div><strong>🔥 ${duration * 7} kcal</strong><span>Estimación</span></div>
+      <div><strong>🔥 ${effectiveDuration * 7} kcal</strong><span>Estimación</span></div>
     </div>
     ${blockMarkup}
   `;
+}
+
+function renderStepper(label, value, suffix, field, blockIndex, step, min, max){
+  return `<div class="settingsStepper"><span>${label}</span><div><button type="button" data-block-adjust="${field}" data-block-index="${blockIndex}" data-step="-${step}" aria-label="Reducir ${label}">−</button><strong>${value}${suffix}</strong><button type="button" data-block-adjust="${field}" data-block-index="${blockIndex}" data-step="${step}" aria-label="Aumentar ${label}">+</button></div></div>`;
+}
+
+function openBlockSettings(blockIndex){
+  const block = generatedBlocks[blockIndex];
+  if(!block) return;
+
+  activeBlockSettingsIndex = blockIndex;
+  blockSettingsTitle.textContent = block.label;
+  const isRoundBlock = block.type === "superset" || block.type === "conditioning";
+  const supportsReps = blockSupportsReps(block);
+  const modeControl = supportsReps ? `<div class="settingsMode"><span>Formato</span><div><button type="button" data-block-mode="time" class="${isTimedBlock(block) ? "is-active" : ""}">Tiempo</button><button type="button" data-block-mode="reps" class="${!isTimedBlock(block) ? "is-active" : ""}">Reps</button></div></div>` : "";
+  const roundControl = isRoundBlock ? renderStepper("Rondas", block.rounds, "", "rounds", blockIndex, 1, 1, 6) : "";
+  const workControl = isTimedBlock(block)
+    ? renderStepper("Tiempo por ejercicio", getBlockWorkTime(block), "s", "workTime", blockIndex, 5, 10, 90)
+    : renderStepper("Repeticiones", getBlockReps(block), " reps", "reps", blockIndex, 2, 4, 30);
+  const restControls = isRoundBlock ? `${renderStepper("Descanso entre ejercicios", getBlockRestExercise(block), "s", "restExercise", blockIndex, 5, 0, 90)}${renderStepper("Descanso entre rondas", getBlockRestSuperset(block), "s", "restSuperset", blockIndex, 5, 0, 180)}` : "";
+
+  blockSettingsContent.innerHTML = `${modeControl}${roundControl}${workControl}${restControls}<p class="settingsHint">Los cambios se aplican solo a esta sesión.</p>`;
+  blockSettingsModal.classList.remove("hidden");
+}
+
+function closeBlockSettings(){
+  blockSettingsModal.classList.add("hidden");
+  activeBlockSettingsIndex = null;
+}
+
+function updateRoutineFromBlockSettings(){
+  workoutExercises = createWorkoutTimeline(generatedBlocks);
+  renderRoutine(generatedBlocks);
+  if(activeBlockSettingsIndex !== null) openBlockSettings(activeBlockSettingsIndex);
+}
+
+function adjustBlockSetting(blockIndex, field, step){
+  const block = generatedBlocks[blockIndex];
+  if(!block) return;
+  const limits = {
+    rounds:[1,6], workTime:[10,90], restExercise:[0,90], restSuperset:[0,180], reps:[4,30]
+  };
+  const current = field === "rounds" ? block.rounds : (field === "workTime" ? getBlockWorkTime(block) : field === "restExercise" ? getBlockRestExercise(block) : field === "restSuperset" ? getBlockRestSuperset(block) : getBlockReps(block));
+  const [min, max] = limits[field];
+  const next = Math.max(min, Math.min(max, current + step));
+  if(field === "rounds") block.rounds = next;
+  else block[field] = next;
+  updateRoutineFromBlockSettings();
 }
 
 function getGeneratedExerciseReference(index){
@@ -421,7 +526,7 @@ function openReplacementModal(index){
     .slice(0,5);
 
   activeReplacementIndex = index;
-  replaceModalDescription.textContent = `${reference.exercise.name} · ${getScheduledDuration(reference.exercise, reference.block.phase)}s`;
+  replaceModalDescription.textContent = `${reference.exercise.name} · ${isTimedBlock(reference.block) ? `${getScheduledDuration(reference.exercise, reference.block)}s` : `${getBlockReps(reference.block)} reps`}`;
   replacementOptions.innerHTML = alternatives.map(exercise => `
     <button class="replacementOption" type="button" data-exercise-id="${exercise.id}">
       ${renderExerciseThumbnail(exercise)}
@@ -442,14 +547,14 @@ function replaceExercise(index, newExerciseId){
   const sameMovementFamily = ["warmup", "mobility"].includes(replacement.category) === ["warmup", "mobility"].includes(reference.exercise.category);
   if(!samePatternAlternative || !sameMovementFamily) return;
 
-  const preservedDuration = getScheduledDuration(reference.exercise, reference.block.phase);
+  const preservedDuration = isTimedBlock(reference.block) ? getScheduledDuration(reference.exercise, reference.block) : null;
   reference.block.exercises[reference.block.exercises.indexOf(reference.exercise)] = {
     ...replacement,
-    durationOverride:preservedDuration
+    ...(preservedDuration !== null ? { durationOverride:preservedDuration } : {})
   };
 
   workoutExercises = createWorkoutTimeline(generatedBlocks);
-  renderRoutine(generatedBlocks, Number(timeSlider.value));
+  renderRoutine(generatedBlocks);
   closeReplacementModal();
 }
 
@@ -518,18 +623,19 @@ function updateExerciseVisual(exercise){
 function updateTimerView(){
   const current = workoutExercises[workoutStep];
   if(!current) return;
+  const isRepsExercise = !isRest && current.mode === "reps";
   const duration = isRest ? activeRestDuration : current.duration;
-  const progress = Math.max(0, secondsLeft) / duration;
+  const progress = isRepsExercise ? 1 : Math.max(0, secondsLeft) / duration;
   const upcoming = isRest ? workoutExercises[workoutStep + 1] : workoutExercises[workoutStep + 1];
 
-  timerValue.textContent = formatTime(secondsLeft);
+  timerValue.textContent = isRepsExercise ? `${current.reps} reps` : formatTime(secondsLeft);
   timerProgress.style.strokeDashoffset = ringLength * (1 - progress);
   timerProgress.classList.toggle("is-rest", isRest);
   timerProgress.classList.toggle("is-final", secondsLeft <= 5);
   workoutPhase.textContent = isRest ? "Descanso" : current.phase;
   exerciseName.textContent = isRest ? "Recupera el aliento" : current.name;
   nextExercise.textContent = upcoming ? upcoming.name : "Sesión completada";
-  timerStatus.textContent = isRest ? "Descansa" : "En movimiento";
+  timerStatus.textContent = isRest ? "Descansa" : isRepsExercise ? "Objetivo de repeticiones" : "En movimiento";
 
   updateExercisePresentation(current, isRest);
   updateExerciseVisual(isRest ? null : current);
@@ -571,8 +677,17 @@ function advanceWorkout(){
     return;
   }
 
-  secondsLeft = isRest ? activeRestDuration : workoutExercises[workoutStep].duration;
+  const current = workoutExercises[workoutStep];
+  secondsLeft = isRest ? activeRestDuration : current.duration;
   endTime = Date.now() + secondsLeft * 1000;
+  if(!isRest && current.mode === "reps"){
+    clearInterval(timerId);
+    timerId = null;
+    playPauseBtn.textContent = "✓ Completar ejercicio";
+    playPauseBtn.setAttribute("aria-pressed", "true");
+  }else if(isPlaying && !timerId){
+    timerId = setInterval(runTimer, 200);
+  }
   updateTimerView();
 }
 
@@ -586,6 +701,13 @@ function runTimer(){
 function startTimer(){
   if(isPlaying) return;
   isPlaying = true;
+  const current = workoutExercises[workoutStep];
+  if(!isRest && current?.mode === "reps"){
+    updateTimerView();
+    playPauseBtn.textContent = "✓ Completar ejercicio";
+    playPauseBtn.setAttribute("aria-pressed", "true");
+    return;
+  }
   endTime = Date.now() + secondsLeft * 1000;
   timerId = setInterval(runTimer, 200);
   runTimer();
@@ -595,7 +717,7 @@ function startTimer(){
 
 function pauseTimer(){
   if(!isPlaying) return;
-  runTimer();
+  if(isRest || workoutExercises[workoutStep]?.mode !== "reps") runTimer();
   isPlaying = false;
   clearInterval(timerId);
   timerId = null;
@@ -610,6 +732,7 @@ function resetWorkout(){
   workoutStep = 0;
   isRest = false;
   activeRestDuration = workoutConfig.restExercise;
+  if(!workoutExercises.length) return;
   secondsLeft = workoutExercises[0].duration;
   isPlaying = false;
   activeExercisePresentation = "";
@@ -626,7 +749,7 @@ generateBtn.addEventListener("click",()=>{
 
   durationBadge.textContent = `${minutes} min`;
   routineTitle.textContent = title.textContent.replace("Full Body ", "");
-  renderRoutine(generatedBlocks, minutes);
+  renderRoutine(generatedBlocks);
 
   coachScreen.classList.add("hidden");
   routineScreen.classList.remove("hidden");
@@ -641,11 +764,11 @@ backBtn.addEventListener("click",()=>{
 
 startWorkoutBtn.addEventListener("click",()=>{
   activeSession = {
-    duration:Number(timeSlider.value),
+    duration:getEffectiveDurationMinutes(generatedBlocks),
     workoutName:routineTitle.textContent,
     completedExercises:workoutExercises.length,
     rounds:getSessionRounds(),
-    estimatedKcal:Number(timeSlider.value) * 7,
+    estimatedKcal:getEffectiveDurationMinutes(generatedBlocks) * 7,
     saved:false
   };
   routineScreen.classList.add("hidden");
@@ -677,6 +800,18 @@ doneBtn.addEventListener("click",()=>{
 routineCard.addEventListener("click", event => {
   const replaceButton = event.target.closest(".replaceExerciseBtn");
   if(replaceButton) openReplacementModal(Number(replaceButton.dataset.exerciseIndex));
+  const settingsButton = event.target.closest("[data-block-settings]");
+  if(settingsButton) openBlockSettings(Number(settingsButton.dataset.blockSettings));
+});
+
+routineCard.addEventListener("change", event => {
+  const skipToggle = event.target.closest("[data-skip-block]");
+  if(!skipToggle) return;
+  const block = generatedBlocks[Number(skipToggle.dataset.skipBlock)];
+  if(!block) return;
+  block.skipped = skipToggle.checked;
+  workoutExercises = createWorkoutTimeline(generatedBlocks);
+  renderRoutine(generatedBlocks);
 });
 
 closeReplaceModal.addEventListener("click", closeReplacementModal);
@@ -692,6 +827,24 @@ replacementOptions.addEventListener("click", event => {
   }
 });
 
+closeBlockSettings.addEventListener("click", closeBlockSettings);
+
+blockSettingsModal.addEventListener("click", event => {
+  if(event.target.matches("[data-close-block-settings]")) closeBlockSettings();
+  const modeButton = event.target.closest("[data-block-mode]");
+  if(modeButton && activeBlockSettingsIndex !== null){
+    const block = generatedBlocks[activeBlockSettingsIndex];
+    if(block && (modeButton.dataset.blockMode === "time" || blockSupportsReps(block))){
+      block.mode = modeButton.dataset.blockMode;
+      updateRoutineFromBlockSettings();
+    }
+  }
+  const adjustButton = event.target.closest("[data-block-adjust]");
+  if(adjustButton){
+    adjustBlockSetting(Number(adjustButton.dataset.blockIndex), adjustButton.dataset.blockAdjust, Number(adjustButton.dataset.step));
+  }
+});
+
 document.addEventListener("error", event => {
   const image = event.target;
   if(!(image instanceof HTMLImageElement) || !image.matches(".exerciseThumbnail img")) return;
@@ -702,6 +855,8 @@ playPauseBtn.addEventListener("click",()=>{
   if(workoutStep === workoutExercises.length - 1 && secondsLeft === 0){
     resetWorkout();
     startTimer();
+  }else if(isPlaying && !isRest && workoutExercises[workoutStep]?.mode === "reps"){
+    advanceWorkout();
   }else if(isPlaying){
     pauseTimer();
   }else{

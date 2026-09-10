@@ -1,5 +1,13 @@
 # MotionFit Changelog
 
+## v0.9
+
+- Added optional skip/already-done controls for warm-up and stretching
+- Added per-block workout settings
+- Added manual rounds and timing adjustments
+- Added initial repetition-mode support
+- Added live workout-duration recalculation
+
 ## v0.8.5
 
 - Replaced legacy avatar thumbnails with real exercise images

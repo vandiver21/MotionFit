@@ -1,4 +1,4 @@
-const CACHE_NAME = "motionfit-v0.8.5";
+const CACHE_NAME = "motionfit-v0.9";
 const APP_SHELL = [
   "./",
   "index.html",

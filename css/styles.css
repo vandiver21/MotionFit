@@ -743,6 +743,63 @@ body{ overflow-x:hidden; }
   font-size:11px;
 }
 
+.blockSummary{
+  display:block;
+  margin-top:4px;
+}
+
+.blockHeaderActions{
+  align-items:center;
+  display:flex;
+  gap:8px;
+}
+
+.blockSkipToggle{
+  align-items:center;
+  color:#A7F3D0;
+  cursor:pointer;
+  display:flex;
+  font-size:10px;
+  font-weight:700;
+  gap:5px;
+  white-space:nowrap;
+}
+
+.blockSkipToggle input{
+  accent-color:#34D399;
+  height:16px;
+  margin:0;
+  width:16px;
+}
+
+.blockSettingsBtn{
+  align-items:center;
+  background:rgba(148,163,184,.08);
+  border:1px solid rgba(148,163,184,.18);
+  border-radius:10px;
+  color:#CBD5E1;
+  cursor:pointer;
+  display:flex;
+  font-size:16px;
+  height:40px;
+  justify-content:center;
+  padding:0;
+  width:40px;
+}
+
+.routineBlock.is-skipped{
+  border-color:rgba(52,211,153,.24);
+  opacity:.62;
+}
+
+.routineBlock.is-skipped .routineExerciseRow{
+  filter:saturate(.35);
+}
+
+.routineBlock.is-skipped .routineExerciseName strong{
+  text-decoration:line-through;
+}
+
 .routineExerciseRow{
   align-items:center;
   background:rgba(8,17,31,.52);
@@ -905,6 +962,104 @@ body{ overflow-x:hidden; }
   justify-content:center;
   position:fixed;
   z-index:20;
+}
+
+.blockSettingsModal{
+  align-items:flex-end;
+  display:flex;
+  inset:0;
+  justify-content:center;
+  position:fixed;
+  z-index:22;
+}
+
+.blockSettingsModal.hidden{ display:none; }
+
+.blockSettingsPanel{
+  background:#111C2D;
+  border:1px solid rgba(148,163,184,.18);
+  border-radius:24px 24px 0 0;
+  box-shadow:0 -18px 48px rgba(0,0,0,.36);
+  max-height:82vh;
+  overflow:auto;
+  padding:20px 18px calc(env(safe-area-inset-bottom,0px) + 22px);
+  position:relative;
+  width:min(100%,430px);
+}
+
+.blockSettingsContent{
+  display:grid;
+  gap:10px;
+  margin-top:18px;
+}
+
+.settingsStepper,
+.settingsMode{
+  align-items:center;
+  background:#0B1627;
+  border:1px solid rgba(148,163,184,.1);
+  border-radius:15px;
+  display:flex;
+  justify-content:space-between;
+  min-height:58px;
+  padding:10px 12px;
+}
+
+.settingsStepper > span,
+.settingsMode > span{
+  color:#E2E8F0;
+  font-size:13px;
+  font-weight:700;
+}
+
+.settingsStepper > div,
+.settingsMode > div{
+  align-items:center;
+  display:flex;
+  gap:7px;
+}
+
+.settingsStepper button,
+.settingsMode button{
+  align-items:center;
+  background:rgba(37,99,235,.14);
+  border:1px solid rgba(96,165,250,.2);
+  border-radius:9px;
+  color:#BFDBFE;
+  cursor:pointer;
+  display:flex;
+  font-size:20px;
+  height:32px;
+  justify-content:center;
+  line-height:1;
+  padding:0;
+  width:32px;
+}
+
+.settingsStepper strong{
+  font-size:13px;
+  min-width:55px;
+  text-align:center;
+}
+
+.settingsMode button{
+  font-size:12px;
+  font-weight:700;
+  padding:0 10px;
+  width:auto;
+}
+
+.settingsMode button.is-active{
+  background:#2563EB;
+  border-color:#60A5FA;
+  color:white;
+}
+
+.settingsHint{
+  color:var(--muted);
+  font-size:11px;
+  margin:4px 2px 0;
+  text-align:center;
 }
 
 .replaceModal.hidden{ display:none; }
