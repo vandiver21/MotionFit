@@ -1,36 +1,222 @@
 {
   "cat-cow": {
-    "start": "assets/exercises/cat_cow_start.webp"
+    "start": "assets/exercises/repdb/cat-cow-main.webp",
+    "end": ""
+  },
+  "high-knees": {
+    "start": "assets/exercises/repdb/high-knees-main.webp",
+    "end": ""
+  },
+  "jumping-jacks": {
+    "start": "assets/exercises/repdb/jumping-jacks-start.webp",
+    "end": "assets/exercises/repdb/jumping-jacks-peak.webp"
+  },
+  "bodyweight-good-morning": {
+    "start": "assets/exercises/repdb/bodyweight-good-morning-start.webp",
+    "end": "assets/exercises/repdb/bodyweight-good-morning-peak.webp"
+  },
+  "half-kneeling-hip-flexor-rock": {
+    "start": "assets/exercises/repdb/half-kneeling-hip-flexor-rock-start.webp",
+    "end": "assets/exercises/repdb/half-kneeling-hip-flexor-rock-peak.webp"
+  },
+  "bear-crawl": {
+    "start": "assets/exercises/repdb/bear-crawl-start.webp",
+    "end": "assets/exercises/repdb/bear-crawl-peak.webp"
+  },
+  "bodyweight-squat": {
+    "start": "assets/exercises/repdb/bodyweight-squat-start.webp",
+    "end": "assets/exercises/repdb/bodyweight-squat-peak.webp"
   },
   "goblet-squat": {
-    "start": "assets/exercises/goblet_squat_start.webp",
-    "end": "assets/exercises/goblet_squat_end.webp"
+    "start": "assets/exercises/repdb/goblet-squat-start.webp",
+    "end": "assets/exercises/repdb/goblet-squat-peak.webp"
   },
-  "push-up": {
-    "start": "assets/exercises/push_up_start.webp",
-    "end": "assets/exercises/push_up_end.webp"
+  "sumo-squat": {
+    "start": "",
+    "end": ""
   },
-  "reverse-lunge": {
-    "start": "assets/exercises/reverse_lunge_start.webp",
-    "end": "assets/exercises/reverse_lunge_end.webp"
+  "bodyweight-reverse-lunge": {
+    "start": "assets/exercises/repdb/bodyweight-reverse-lunge-start.webp",
+    "end": "assets/exercises/repdb/bodyweight-reverse-lunge-peak.webp"
   },
   "split-squat": {
-    "start": "assets/exercises/split_squat_start.webp",
-    "end": "assets/exercises/split_squat_end.webp"
+    "start": "assets/exercises/repdb/split-squat-start.webp",
+    "end": "assets/exercises/repdb/split-squat-peak.webp"
+  },
+  "kettlebell-bulgarian-split-squat": {
+    "start": "assets/exercises/repdb/kettlebell-bulgarian-split-squat-start.webp",
+    "end": "assets/exercises/repdb/kettlebell-bulgarian-split-squat-peak.webp"
+  },
+  "kettlebell-goblet-lunge": {
+    "start": "assets/exercises/repdb/kettlebell-goblet-lunge-start.webp",
+    "end": "assets/exercises/repdb/kettlebell-goblet-lunge-peak.webp"
+  },
+  "step-ups": {
+    "start": "assets/exercises/repdb/step-ups-start.webp",
+    "end": "assets/exercises/repdb/step-ups-peak.webp"
   },
   "glute-bridge": {
-    "start": "assets/exercises/glute_bridge_start.webp",
-    "end": "assets/exercises/glute_bridge_end.webp"
+    "start": "assets/exercises/repdb/glute-bridge-start.webp",
+    "end": "assets/exercises/repdb/glute-bridge-peak.webp"
   },
-  "bird-dog": {
-    "start": "assets/exercises/bird_dog_start.webp",
-    "end": "assets/exercises/bird_dog_end.webp"
+  "glute-bridge-hold": {
+    "start": "assets/exercises/repdb/glute-bridge-hold-main.webp",
+    "end": ""
+  },
+  "romanian-deadlift": {
+    "start": "",
+    "end": ""
+  },
+  "one-arm-single-leg-kettlebell-romanian-deadlift": {
+    "start": "assets/exercises/repdb/one-arm-single-leg-kettlebell-romanian-deadlift-start.webp",
+    "end": "assets/exercises/repdb/one-arm-single-leg-kettlebell-romanian-deadlift-peak.webp"
+  },
+  "kettlebell-deadlift": {
+    "start": "assets/exercises/repdb/kettlebell-deadlift-start.webp",
+    "end": "assets/exercises/repdb/kettlebell-deadlift-peak.webp"
+  },
+  "kettlebell-rotational-lunge": {
+    "start": "assets/exercises/repdb/kettlebell-rotational-lunge-start.webp",
+    "end": "assets/exercises/repdb/kettlebell-rotational-lunge-peak.webp"
+  },
+  "knee-push-ups": {
+    "start": "assets/exercises/repdb/knee-push-ups-start.webp",
+    "end": "assets/exercises/repdb/knee-push-ups-peak.webp"
+  },
+  "incline-push-ups": {
+    "start": "assets/exercises/repdb/incline-push-ups-start.webp",
+    "end": "assets/exercises/repdb/incline-push-ups-peak.webp"
+  },
+  "push-up": {
+    "start": "assets/exercises/repdb/push-up-start.webp",
+    "end": "assets/exercises/repdb/push-up-peak.webp"
+  },
+  "diamond-push-ups": {
+    "start": "assets/exercises/repdb/diamond-push-ups-start.webp",
+    "end": "assets/exercises/repdb/diamond-push-ups-peak.webp"
+  },
+  "pike-push-ups": {
+    "start": "assets/exercises/repdb/pike-push-ups-start.webp",
+    "end": "assets/exercises/repdb/pike-push-ups-peak.webp"
+  },
+  "one-arm-kettlebell-row": {
+    "start": "assets/exercises/repdb/one-arm-kettlebell-row-start.webp",
+    "end": "assets/exercises/repdb/one-arm-kettlebell-row-peak.webp"
+  },
+  "one-arm-kettlebell-floor-press": {
+    "start": "assets/exercises/repdb/one-arm-kettlebell-floor-press-start.webp",
+    "end": "assets/exercises/repdb/one-arm-kettlebell-floor-press-peak.webp"
+  },
+  "kettlebell-halo": {
+    "start": "assets/exercises/repdb/kettlebell-halo-start.webp",
+    "end": "assets/exercises/repdb/kettlebell-halo-peak.webp"
+  },
+  "kettlebell-overhead-tricep-extension": {
+    "start": "assets/exercises/repdb/kettlebell-overhead-tricep-extension-start.webp",
+    "end": "assets/exercises/repdb/kettlebell-overhead-tricep-extension-peak.webp"
   },
   "dead-bug": {
-    "start": "assets/exercises/dead_bug_start.webp",
-    "end": "assets/exercises/dead_bug_end.webp"
+    "start": "assets/exercises/repdb/dead-bug-start.webp",
+    "end": "assets/exercises/repdb/dead-bug-peak.webp"
   },
-  "child-pose": {
-    "start": "assets/exercises/child_pose_start.webp"
+  "bird-dog": {
+    "start": "assets/exercises/repdb/bird-dog-start.webp",
+    "end": "assets/exercises/repdb/bird-dog-peak.webp"
+  },
+  "bird-dog-hold": {
+    "start": "assets/exercises/repdb/bird-dog-hold-main.webp",
+    "end": ""
+  },
+  "plank": {
+    "start": "assets/exercises/repdb/plank-main.webp",
+    "end": ""
+  },
+  "side-plank": {
+    "start": "assets/exercises/repdb/side-plank-main.webp",
+    "end": ""
+  },
+  "hollow-body-hold": {
+    "start": "assets/exercises/repdb/hollow-body-hold-main.webp",
+    "end": ""
+  },
+  "lying-leg-raise": {
+    "start": "assets/exercises/repdb/lying-leg-raise-start.webp",
+    "end": "assets/exercises/repdb/lying-leg-raise-peak.webp"
+  },
+  "scissor-kicks": {
+    "start": "assets/exercises/repdb/scissor-kicks-start.webp",
+    "end": "assets/exercises/repdb/scissor-kicks-peak.webp"
+  },
+  "kettlebell-russian-twist": {
+    "start": "assets/exercises/repdb/kettlebell-russian-twist-start.webp",
+    "end": "assets/exercises/repdb/kettlebell-russian-twist-peak.webp"
+  },
+  "suitcase-carry": {
+    "start": "assets/exercises/repdb/suitcase-carry-main.webp",
+    "end": ""
+  },
+  "mountain-climbers": {
+    "start": "assets/exercises/repdb/mountain-climbers-start.webp",
+    "end": "assets/exercises/repdb/mountain-climbers-peak.webp"
+  },
+  "jump-squat": {
+    "start": "assets/exercises/repdb/jump-squat-start.webp",
+    "end": "assets/exercises/repdb/jump-squat-peak.webp"
+  },
+  "burpees": {
+    "start": "assets/exercises/repdb/burpees-main.webp",
+    "end": ""
+  },
+  "kettlebell-swing": {
+    "start": "assets/exercises/repdb/kettlebell-swing-start.webp",
+    "end": "assets/exercises/repdb/kettlebell-swing-peak.webp"
+  },
+  "kettlebell-sumo-high-pull": {
+    "start": "assets/exercises/repdb/kettlebell-sumo-high-pull-start.webp",
+    "end": "assets/exercises/repdb/kettlebell-sumo-high-pull-peak.webp"
+  },
+  "kettlebell-swing-clean": {
+    "start": "assets/exercises/repdb/kettlebell-swing-clean-start.webp",
+    "end": "assets/exercises/repdb/kettlebell-swing-clean-peak.webp"
+  },
+  "pilates-spine-twist": {
+    "start": "assets/exercises/repdb/pilates-spine-twist-start.webp",
+    "end": "assets/exercises/repdb/pilates-spine-twist-peak.webp"
+  },
+  "butterfly-stretch": {
+    "start": "assets/exercises/repdb/butterfly-stretch-main.webp",
+    "end": ""
+  },
+  "pigeon-stretch": {
+    "start": "assets/exercises/repdb/pigeon-stretch-main.webp",
+    "end": ""
+  },
+  "kneeling-hip-flexor-stretch": {
+    "start": "assets/exercises/repdb/kneeling-hip-flexor-stretch-main.webp",
+    "end": ""
+  },
+  "camel-pose": {
+    "start": "assets/exercises/repdb/camel-pose-main.webp",
+    "end": ""
+  },
+  "childs-pose": {
+    "start": "assets/exercises/repdb/childs-pose-main.webp",
+    "end": ""
+  },
+  "cobra-stretch": {
+    "start": "assets/exercises/repdb/cobra-stretch-main.webp",
+    "end": ""
+  },
+  "cross-body-shoulder-stretch": {
+    "start": "assets/exercises/repdb/cross-body-shoulder-stretch-main.webp",
+    "end": ""
+  },
+  "overhead-triceps-stretch": {
+    "start": "assets/exercises/repdb/overhead-triceps-stretch-main.webp",
+    "end": ""
+  },
+  "neck-side-stretch": {
+    "start": "assets/exercises/repdb/neck-side-stretch-main.webp",
+    "end": ""
   }
 }

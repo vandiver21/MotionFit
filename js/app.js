@@ -111,7 +111,6 @@ const replacementOptions = document.getElementById("replacementOptions");
 const blockSettingsModal = document.getElementById("blockSettingsModal");
 const blockSettingsTitle = document.getElementById("blockSettingsTitle");
 const blockSettingsContent = document.getElementById("blockSettingsContent");
-const closeBlockSettings = document.getElementById("closeBlockSettings");
 const progressLabel = document.getElementById("progressLabel");
 const progressPercent = document.getElementById("progressPercent");
 const progressBar = document.getElementById("progressBar");
@@ -165,9 +164,9 @@ async function loadExerciseCatalog(){
 
   const catalog = await response.json();
 
-  const requiredFields = ["id", "name", "category", "pattern", "equipment", "animation", "muscles", "level", "defaultDuration"];
+  const requiredFields = ["id", "name", "category", "pattern", "equipment", "muscles", "level", "defaultDuration", "mode", "instruction", "imageStart", "imageEnd"];
 
-  if(!Array.isArray(catalog) || catalog.length < 20 || !catalog.every(exercise => requiredFields.every(field => field in exercise) && exercise.level >= 1 && exercise.level <= 3)){
+  if(!Array.isArray(catalog) || catalog.length !== 55 || new Set(catalog.map(exercise => exercise.id)).size !== 55 || !catalog.every(exercise => requiredFields.every(field => field in exercise) && exercise.level >= 1 && exercise.level <= 3 && ["bodyweight", "kettlebell", "bench", "kettlebell_bench"].includes(exercise.equipment))){
     throw new Error("El catálogo de ejercicios no es válido.");
   }
 
@@ -183,39 +182,54 @@ async function loadExerciseCatalog(){
 
   return catalog.map(exercise => {
     const mappedImages = imageMap[exercise.id] || {};
-    const supportsReps = ["strength", "core"].includes(exercise.category);
     return {
       ...exercise,
-      imageStart:exercise.imageStart || mappedImages.start,
-      imageEnd:exercise.imageEnd || mappedImages.end,
+      imageStart:exercise.imageStart ?? mappedImages.start ?? "",
+      imageEnd:exercise.imageEnd ?? mappedImages.end ?? "",
       mode:exercise.mode === "reps" ? "reps" : "time",
-      defaultReps:Number.isFinite(exercise.defaultReps) ? exercise.defaultReps : (supportsReps ? 12 : null)
+      defaultReps:Number.isFinite(exercise.defaultReps) ? exercise.defaultReps : null
     };
   });
 }
 
 function pickExercises(category, count, energy, seed, usedIds = new Set()){
   const candidates = exerciseCatalog
-    .filter(exercise => exercise.category === category && !usedIds.has(exercise.id))
-    .sort((a,b) => {
-      const levelDifference = Math.abs(a.level - Math.ceil(energy / 2)) - Math.abs(b.level - Math.ceil(energy / 2));
-      const imageDifference = Number(hasExerciseImage(b)) - Number(hasExerciseImage(a));
-      return levelDifference || imageDifference || a.id.localeCompare(b.id);
+    .filter(exercise => exercise.category === category && !usedIds.has(exercise.id) && (energy > 2 || exercise.level <= 2));
+  const previousIds = new Set(generatedBlocks.flatMap(block => block.exercises.map(exercise => exercise.id)));
+  const variety = new Map(candidates.map(exercise => {
+    let hash = seed;
+    for(const character of exercise.id) hash = Math.imul(hash ^ character.charCodeAt(0), 16777619);
+    return [exercise.id, (hash >>> 0) / 4294967296 + (hasExerciseImage(exercise) ? 0.05 : 0)];
+  }));
+  const selected = [];
+  while(selected.length < count && candidates.length){
+    const usedExercises = exerciseCatalog.filter(exercise => usedIds.has(exercise.id) && exercise.category === category);
+    const usedPatterns = new Set(usedExercises.map(exercise => exercise.pattern));
+    const upperPatterns = ["horizontal-push", "vertical-push", "pull", "shoulder-mobility", "elbow-extension"];
+    const preferUpper = usedExercises.length % 2 === 1;
+    candidates.sort((a,b) => {
+      const redundancy = Number(usedPatterns.has(a.pattern)) - Number(usedPatterns.has(b.pattern));
+      const balance = category === "strength" ? Number(upperPatterns.includes(a.pattern) !== preferUpper) - Number(upperPatterns.includes(b.pattern) !== preferUpper) : 0;
+      const accessory = category === "strength" ? Number(["shoulder-mobility", "elbow-extension"].includes(a.pattern)) - Number(["shoulder-mobility", "elbow-extension"].includes(b.pattern)) : 0;
+      const level = Math.abs(a.level - Math.ceil(energy / 2)) - Math.abs(b.level - Math.ceil(energy / 2));
+      const repetition = Number(previousIds.has(a.id)) - Number(previousIds.has(b.id));
+      return redundancy || balance || accessory || level || repetition || variety.get(b.id) - variety.get(a.id);
     });
-
-  const selected = candidates.slice(0, count);
-
-  selected.forEach(exercise => usedIds.add(exercise.id));
+    const exercise = candidates.shift();
+    selected.push(exercise);
+    usedIds.add(exercise.id);
+  }
   return selected;
 }
 
 function createBlock(phase, label, exercises, rounds = 1, type = "standard"){
-  return { phase, label, exercises, rounds, type, skipped:false, mode:"time", workTime:null, restExercise:null, restSuperset:null, reps:null };
+  const mode = exercises.length && exercises.every(exercise => exercise.mode === "reps") ? "reps" : "time";
+  return { phase, label, exercises, rounds, type, skipped:false, mode, workTime:null, restExercise:null, restSuperset:null, reps:null };
 }
 
 function generateSession(duration, energy){
   const usedIds = new Set();
-  const seed = duration + energy * 7;
+  const seed = Math.floor(Math.random() * 4294967296);
   const warmupCount = duration === 20 ? 3 : 4;
   const supersetRounds = getSupersetRounds(duration);
   const blocks = [
@@ -233,11 +247,7 @@ function generateSession(duration, energy){
   });
 
   if(duration === 50){
-    const conditioningPool = exerciseCatalog
-      .filter(exercise => ["strength", "core"].includes(exercise.category))
-      .sort((a,b) => Math.abs(a.level - Math.ceil(energy / 2)) - Math.abs(b.level - Math.ceil(energy / 2)) || Number(hasExerciseImage(b)) - Number(hasExerciseImage(a)) || a.id.localeCompare(b.id));
-    const conditioning = conditioningPool.filter(exercise => !usedIds.has(exercise.id)).slice(0, 2);
-    blocks.push(createBlock("Condicionamiento", "Conditioning", conditioning.length === 2 ? conditioning : conditioningPool.slice(0,2), 2, "conditioning"));
+    blocks.push(createBlock("Condicionamiento", "Conditioning", pickExercises("conditioning", 2, energy, seed + 9, usedIds), 2, "conditioning"));
   }
 
   const coreCount = duration >= 40 ? 2 : 1;
@@ -247,7 +257,7 @@ function generateSession(duration, energy){
     blocks.push(createBlock("Movilidad", "Movilidad", pickExercises("mobility", 1, energy, seed + 13, usedIds)));
   }
 
-  blocks.push(createBlock("Stretch", "Stretch", pickExercises("mobility", 1, energy, seed + 17, usedIds)));
+  blocks.push(createBlock("Stretch", "Stretch", pickExercises("stretch", 1, energy, seed + 17, usedIds)));
 
   return blocks;
 }
@@ -256,7 +266,7 @@ function getExerciseDuration(exercise, phase = ""){
   if(phase === "Condicionamiento") return workoutConfig.workTime;
   if(exercise.category === "warmup") return workoutConfig.warmupTime;
   if(exercise.category === "core") return workoutConfig.coreTime;
-  if(exercise.category === "mobility") return workoutConfig.stretchTime;
+  if(["mobility", "stretch"].includes(exercise.category)) return workoutConfig.stretchTime;
   return workoutConfig.workTime;
 }
 
@@ -288,10 +298,25 @@ function isTimedBlock(block){
   return block.mode !== "reps" || !blockSupportsReps(block);
 }
 
+function getBlockControls(block){
+  const isRoundBlock = ["superset", "conditioning"].includes(block.type);
+  const blockIndex = generatedBlocks.indexOf(block);
+  const hasNextBlock = generatedBlocks.slice(blockIndex + 1).some(next => !next.skipped);
+  return {
+    rounds:isRoundBlock || block.rounds > 1,
+    restExercise:block.exercises.length > 1 || (!isRoundBlock && (block.rounds > 1 || hasNextBlock)),
+    restSuperset:isRoundBlock && (block.rounds > 1 || hasNextBlock)
+  };
+}
+
 function getBlockSummary(block){
   const exerciseValue = isTimedBlock(block) ? `${getBlockWorkTime(block)}s` : `${getBlockReps(block)} reps`;
   if(block.type === "superset" || block.type === "conditioning"){
-    return `${exerciseValue} · ${getBlockRestSuperset(block)}s descanso`;
+    const controls = getBlockControls(block);
+    const rests = [];
+    if(controls.restExercise) rests.push(`${getBlockRestExercise(block)}s`);
+    if(controls.restSuperset) rests.push(`${getBlockRestSuperset(block)}s`);
+    return `${exerciseValue}${rests.length ? ` · ${rests.join(" / ")}` : ""}`;
   }
   return exerciseValue;
 }
@@ -356,7 +381,7 @@ function createWorkoutTimeline(blocks){
         const isRoundBlock = block.type === "superset" || block.type === "conditioning";
         const restAfter = isRoundBlock
           ? (isLastExercise ? ((isLastRound && !hasNextBlock) ? 0 : getBlockRestSuperset(block)) : getBlockRestExercise(block))
-          : (!isLastExercise ? getBlockRestExercise(block) : (hasNextBlock ? getBlockRestExercise(block) : 0));
+          : (!isLastExercise || !isLastRound || hasNextBlock ? getBlockRestExercise(block) : 0);
 
         timeline.push({
           ...exercise,
@@ -386,7 +411,7 @@ function getEffectiveDurationMinutes(blocks){
 }
 
 function equipmentLabel(equipment){
-  return equipment === "dumbbell" ? "KB" : "BW";
+  return {bodyweight:"BW", kettlebell:"KB", bench:"Banco", kettlebell_bench:"KB + Banco"}[equipment] || "";
 }
 
 function isLocalExerciseImage(path){
@@ -398,11 +423,10 @@ function hasExerciseImage(exercise){
 }
 
 function renderExerciseThumbnail(exercise){
-  const imagePath = isLocalExerciseImage(exercise.imageStart) ? exercise.imageStart : "";
+  const imagePath = [exercise.imageStart, exercise.imageEnd].find(isLocalExerciseImage);
   return `
     <span class="exerciseThumbnail${imagePath ? " has-image" : " is-fallback"}" aria-hidden="true">
       ${imagePath ? `<img src="${imagePath}" alt="" loading="lazy" decoding="async">` : ""}
-      <span class="exerciseThumbnailFallback">MF</span>
     </span>
   `;
 }
@@ -428,7 +452,6 @@ function renderRoutine(blocks){
         </div>
       `;
       }).join("")}
-      ${block.type !== "standard" && !block.skipped ? `<div class="supersetRest">Descanso entre rondas · ${getBlockRestSuperset(block)}s</div>` : ""}
     </div>
   `).join("");
 
@@ -443,8 +466,17 @@ function renderRoutine(blocks){
   `;
 }
 
-function renderStepper(label, value, suffix, field, blockIndex, step, min, max){
-  return `<div class="settingsStepper"><span>${label}</span><div><button type="button" data-block-adjust="${field}" data-block-index="${blockIndex}" data-step="-${step}" aria-label="Reducir ${label}">−</button><strong>${value}${suffix}</strong><button type="button" data-block-adjust="${field}" data-block-index="${blockIndex}" data-step="${step}" aria-label="Aumentar ${label}">+</button></div></div>`;
+const blockSettingLimits = {
+  rounds:{min:1, max:5, step:1},
+  workTime:{min:15, max:60, step:5},
+  reps:{min:5, max:30, step:1},
+  restExercise:{min:0, max:45, step:5},
+  restSuperset:{min:30, max:120, step:15}
+};
+
+function renderStepper(label, value, suffix, field, blockIndex){
+  const {min, max, step} = blockSettingLimits[field];
+  return `<div class="settingsStepper"><span>${label}</span><div><button type="button" data-block-adjust="${field}" data-block-index="${blockIndex}" data-step="-${step}" aria-label="Reducir ${label}"${value <= min ? " disabled" : ""}>−</button><strong>${value}${suffix}</strong><button type="button" data-block-adjust="${field}" data-block-index="${blockIndex}" data-step="${step}" aria-label="Aumentar ${label}"${value >= max ? " disabled" : ""}>+</button></div></div>`;
 }
 
 function openBlockSettings(blockIndex){
@@ -453,14 +485,14 @@ function openBlockSettings(blockIndex){
 
   activeBlockSettingsIndex = blockIndex;
   blockSettingsTitle.textContent = block.label;
-  const isRoundBlock = block.type === "superset" || block.type === "conditioning";
+  const controls = getBlockControls(block);
   const supportsReps = blockSupportsReps(block);
   const modeControl = supportsReps ? `<div class="settingsMode"><span>Formato</span><div><button type="button" data-block-mode="time" class="${isTimedBlock(block) ? "is-active" : ""}">Tiempo</button><button type="button" data-block-mode="reps" class="${!isTimedBlock(block) ? "is-active" : ""}">Reps</button></div></div>` : "";
-  const roundControl = isRoundBlock ? renderStepper("Rondas", block.rounds, "", "rounds", blockIndex, 1, 1, 6) : "";
+  const roundControl = controls.rounds ? renderStepper("Rondas", block.rounds, "", "rounds", blockIndex) : "";
   const workControl = isTimedBlock(block)
-    ? renderStepper("Tiempo por ejercicio", getBlockWorkTime(block), "s", "workTime", blockIndex, 5, 10, 90)
-    : renderStepper("Repeticiones", getBlockReps(block), " reps", "reps", blockIndex, 2, 4, 30);
-  const restControls = isRoundBlock ? `${renderStepper("Descanso entre ejercicios", getBlockRestExercise(block), "s", "restExercise", blockIndex, 5, 0, 90)}${renderStepper("Descanso entre rondas", getBlockRestSuperset(block), "s", "restSuperset", blockIndex, 5, 0, 180)}` : "";
+    ? renderStepper("Tiempo por ejercicio", getBlockWorkTime(block), "s", "workTime", blockIndex)
+    : renderStepper("Repeticiones por ejercicio", getBlockReps(block), " reps", "reps", blockIndex);
+  const restControls = `${controls.restExercise ? renderStepper("Descanso entre ejercicios", getBlockRestExercise(block), "s", "restExercise", blockIndex) : ""}${controls.restSuperset ? renderStepper("Descanso entre rondas", getBlockRestSuperset(block), "s", "restSuperset", blockIndex) : ""}`;
 
   blockSettingsContent.innerHTML = `${modeControl}${roundControl}${workControl}${restControls}<p class="settingsHint">Los cambios se aplican solo a esta sesión.</p>`;
   blockSettingsModal.classList.remove("hidden");
@@ -479,12 +511,10 @@ function updateRoutineFromBlockSettings(){
 
 function adjustBlockSetting(blockIndex, field, step){
   const block = generatedBlocks[blockIndex];
-  if(!block) return;
-  const limits = {
-    rounds:[1,6], workTime:[10,90], restExercise:[0,90], restSuperset:[0,180], reps:[4,30]
-  };
+  const limits = blockSettingLimits[field];
+  if(!block || !limits || ![limits.step, -limits.step].includes(step)) return;
   const current = field === "rounds" ? block.rounds : (field === "workTime" ? getBlockWorkTime(block) : field === "restExercise" ? getBlockRestExercise(block) : field === "restSuperset" ? getBlockRestSuperset(block) : getBlockReps(block));
-  const [min, max] = limits[field];
+  const {min, max} = limits;
   const next = Math.max(min, Math.min(max, current + step));
   if(field === "rounds") block.rounds = next;
   else block[field] = next;
@@ -513,10 +543,10 @@ function openReplacementModal(index){
   const reference = getGeneratedExerciseReference(index);
   if(!reference) return;
 
-  const isMobilityFamily = exercise => ["warmup", "mobility"].includes(exercise.category);
   const alternatives = exerciseCatalog
     .filter(exercise => exercise.pattern === reference.exercise.pattern && exercise.id !== reference.exercise.id)
-    .filter(exercise => isMobilityFamily(exercise) === isMobilityFamily(reference.exercise))
+    .filter(exercise => exercise.category === reference.exercise.category)
+    .filter(exercise => !generatedBlocks.some(block => block.exercises.some(selected => selected.id === exercise.id)))
     .sort((a,b) => {
       const levelDifference = Math.abs(a.level - reference.exercise.level) - Math.abs(b.level - reference.exercise.level);
       const equipmentDifference = Number(b.equipment === reference.exercise.equipment) - Number(a.equipment === reference.exercise.equipment);
@@ -533,7 +563,7 @@ function openReplacementModal(index){
       <span class="replacementOptionName"><strong>${exercise.name}</strong><small><b class="levelBadge">Nivel ${exercise.level}</b><b class="equipmentBadge">${equipmentLabel(exercise.equipment)}</b></small></span>
       <span class="replacementArrow">›</span>
     </button>
-  `).join("");
+  `).join("") || '<p class="settingsHint">No hay otra variante equivalente en la biblioteca V1.</p>';
   replaceModal.classList.remove("hidden");
 }
 
@@ -544,8 +574,9 @@ function replaceExercise(index, newExerciseId){
   if(!reference || !replacement) return;
 
   const samePatternAlternative = replacement.pattern === reference.exercise.pattern;
-  const sameMovementFamily = ["warmup", "mobility"].includes(replacement.category) === ["warmup", "mobility"].includes(reference.exercise.category);
-  if(!samePatternAlternative || !sameMovementFamily) return;
+  const sameMovementFamily = replacement.category === reference.exercise.category;
+  const alreadySelected = generatedBlocks.some(block => block.exercises.some(exercise => exercise.id === replacement.id));
+  if(!samePatternAlternative || !sameMovementFamily || alreadySelected) return;
 
   const preservedDuration = isTimedBlock(reference.block) ? getScheduledDuration(reference.exercise, reference.block) : null;
   reference.block.exercises[reference.block.exercises.indexOf(reference.exercise)] = {
@@ -586,7 +617,7 @@ function refreshExerciseVisualArea(){
 function loadExerciseImage(image, figure, path, alt, visualId){
   figure.classList.add("hidden");
   image.removeAttribute("src");
-  if(!path) return;
+  if(!isLocalExerciseImage(path)) return;
 
   image.alt = alt;
   image.onload = () => {
@@ -631,7 +662,7 @@ function updateTimerView(){
   timerValue.textContent = isRepsExercise ? `${current.reps} reps` : formatTime(secondsLeft);
   timerProgress.style.strokeDashoffset = ringLength * (1 - progress);
   timerProgress.classList.toggle("is-rest", isRest);
-  timerProgress.classList.toggle("is-final", secondsLeft <= 5);
+  timerProgress.classList.toggle("is-final", !isRepsExercise && secondsLeft <= 5);
   workoutPhase.textContent = isRest ? "Descanso" : current.phase;
   exerciseName.textContent = isRest ? "Recupera el aliento" : current.name;
   nextExercise.textContent = upcoming ? upcoming.name : "Sesión completada";
@@ -685,8 +716,10 @@ function advanceWorkout(){
     timerId = null;
     playPauseBtn.textContent = "✓ Completar ejercicio";
     playPauseBtn.setAttribute("aria-pressed", "true");
-  }else if(isPlaying && !timerId){
-    timerId = setInterval(runTimer, 200);
+  }else if(isPlaying){
+    if(!timerId) timerId = setInterval(runTimer, 200);
+    playPauseBtn.textContent = "❚❚ Pausar";
+    playPauseBtn.setAttribute("aria-pressed", "true");
   }
   updateTimerView();
 }
@@ -827,7 +860,7 @@ replacementOptions.addEventListener("click", event => {
   }
 });
 
-closeBlockSettings.addEventListener("click", closeBlockSettings);
+document.getElementById("closeBlockSettings").addEventListener("click", closeBlockSettings);
 
 blockSettingsModal.addEventListener("click", event => {
   if(event.target.matches("[data-close-block-settings]")) closeBlockSettings();

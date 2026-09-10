@@ -443,7 +443,7 @@ input[type=range]{
   justify-content:center;
   margin:10px auto 0;
   max-width:354px;
-  padding:0 18px;
+  padding:0;
 }
 
 .exerciseVisualArea.hidden,
@@ -460,13 +460,18 @@ input[type=range]{
   overflow:hidden;
 }
 
-.exerciseVisualArea.is-single .exerciseVisual{ flex-basis:100%; }
+.exerciseVisualArea.is-single .exerciseVisual{
+  flex-basis:100%;
+  max-width:208px;
+}
 
 .exerciseVisual img{
-  aspect-ratio:4 / 3;
+  aspect-ratio:1 / 1;
+  background:#EAF3F7;
   display:block;
   height:auto;
-  object-fit:cover;
+  object-fit:contain;
+  object-position:center;
   width:100%;
 }
 
@@ -475,7 +480,7 @@ input[type=range]{
   font-size:9px;
   font-weight:800;
   letter-spacing:.12em;
-  padding:7px 9px 8px;
+  padding:5px 8px;
   text-align:center;
 }
 
@@ -494,7 +499,7 @@ input[type=range]{
 @media (max-height:760px){
   .exerciseVisualArea{ margin-top:6px; }
   .exerciseVisual{ max-width:136px; }
-  .exerciseVisual figcaption{ padding-block:5px 6px; }
+  .exerciseVisualArea.is-single .exerciseVisual{ max-width:176px; }
   .exerciseInstruction{ margin-top:7px; }
 }
 
@@ -807,7 +812,7 @@ body{ overflow-x:hidden; }
   border-radius:14px;
   display:grid;
   gap:10px;
-  grid-template-columns:40px minmax(0,1fr) auto auto;
+  grid-template-columns:44px minmax(0,1fr) auto auto;
   margin-top:8px;
   min-height:58px;
   padding:8px;
@@ -815,7 +820,7 @@ body{ overflow-x:hidden; }
 
 .exerciseThumbnail{
   align-items:center;
-  background:linear-gradient(145deg,#172554,#0F172A);
+  background:#EAF3F7;
   border:1px solid rgba(147,197,253,.14);
   border-radius:12px;
   display:flex;
@@ -830,7 +835,13 @@ body{ overflow-x:hidden; }
   display:block;
   height:100%;
   object-fit:contain;
+  object-position:center;
   width:100%;
+}
+
+.routineExerciseRow .exerciseThumbnail{
+  height:44px;
+  width:44px;
 }
 
 .exerciseThumbnailFallback{
@@ -845,7 +856,7 @@ body{ overflow-x:hidden; }
   width:100%;
 }
 
-.exerciseThumbnail.is-fallback .exerciseThumbnailFallback{ display:flex; }
+.exerciseThumbnail.is-fallback{ visibility:hidden; }
 .exerciseThumbnail.is-fallback img{ display:none; }
 
 .miniAvatar{
@@ -1034,6 +1045,11 @@ body{ overflow-x:hidden; }
   line-height:1;
   padding:0;
   width:32px;
+}
+
+.settingsStepper button:disabled{
+  opacity:.35;
+  cursor:default;
 }
 
 .settingsStepper strong{

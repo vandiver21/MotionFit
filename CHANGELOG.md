@@ -1,7 +1,25 @@
 # MotionFit Changelog
 
+## 0.10.0 — Approved Library
+
+- Improved exercise illustration framing and mobile image display
+- Added curated MotionFit V1 exercise library
+- Expanded bodyweight, kettlebell and bench exercises
+- Added golf- and surf-relevant movement tags
+- Added RepDB-backed exercise illustrations
+- Added Spanish exercise names and concise coaching cues
+- Added Time/Reps defaults by exercise type
+- Improved visual fallback behavior
+- Limited generator to approved V1 exercises
+
 ## v0.9
 
+- Improved Time/Reps block behavior
+- Hidden irrelevant controls by block type
+- Added safe min/max limits
+- Improved block summaries
+- Improved live duration recalculation
+- Fixed duplicate block-settings JavaScript declaration that prevented app initialization
 - Added optional skip/already-done controls for warm-up and stretching
 - Added per-block workout settings
 - Added manual rounds and timing adjustments

@@ -1,36 +1,1197 @@
 [
-  {"id":"world-greatest-stretch","name":"World Greatest Stretch","category":"warmup","pattern":"stretch","equipment":"bodyweight","animation":"stretch","muscles":["hips","hamstrings","thoracic spine"],"level":1,"defaultDuration":30,"instruction":"Cadera baja y brazo hacia el techo."},
-  {"id":"cat-cow","name":"Cat Cow","category":"warmup","pattern":"mobility","equipment":"bodyweight","animation":"catCow","muscles":["spine","core"],"level":1,"defaultDuration":30,"imageStart":"assets/exercises/cat_cow_start.webp","instruction":"Redondea y extiende la columna con control."},
-  {"id":"hip-opener","name":"Hip Opener","category":"warmup","pattern":"mobility","equipment":"bodyweight","animation":"stretch","muscles":["hips","glutes"],"level":1,"defaultDuration":30},
-  {"id":"arm-circles","name":"Arm Circles","category":"warmup","pattern":"mobility","equipment":"bodyweight","animation":"armCircles","muscles":["shoulders","upper back"],"level":1,"defaultDuration":30},
-  {"id":"goblet-squat","name":"Goblet Squat","category":"strength","pattern":"squat","equipment":"dumbbell","animation":"squat","muscles":["quads","glutes","core"],"level":2,"defaultDuration":40,"imageStart":"assets/exercises/goblet_squat_start.webp","imageEnd":"assets/exercises/goblet_squat_end.webp","instruction":"Cadera atrás, rodillas alineadas y pecho alto."},
-  {"id":"front-squat","name":"Front Squat","category":"strength","pattern":"squat","equipment":"dumbbell","animation":"squat","muscles":["quads","glutes","core"],"level":3,"defaultDuration":40},
-  {"id":"air-squat","name":"Air Squat","category":"strength","pattern":"squat","equipment":"bodyweight","animation":"squat","muscles":["quads","glutes"],"level":1,"defaultDuration":40},
-  {"id":"tempo-squat","name":"Tempo Squat","category":"strength","pattern":"squat","equipment":"bodyweight","animation":"squat","muscles":["quads","glutes","core"],"level":2,"defaultDuration":40},
-  {"id":"push-up","name":"Push-up","category":"strength","pattern":"push","equipment":"bodyweight","animation":"pushup","muscles":["chest","triceps","core"],"level":2,"defaultDuration":40,"imageStart":"assets/exercises/push_up_start.webp","imageEnd":"assets/exercises/push_up_end.webp","instruction":"Cuerpo alineado y pecho hacia el suelo."},
-  {"id":"pike-push-up","name":"Pike Push-up","category":"strength","pattern":"push","equipment":"bodyweight","animation":"pikePushup","muscles":["shoulders","triceps","core"],"level":3,"defaultDuration":40},
-  {"id":"incline-push-up","name":"Incline Push-up","category":"strength","pattern":"push","equipment":"bench","animation":"pushup","muscles":["chest","triceps"],"level":1,"defaultDuration":40},
-  {"id":"diamond-push-up","name":"Diamond Push-up","category":"strength","pattern":"push","equipment":"bodyweight","animation":"pushup","muscles":["triceps","chest"],"level":3,"defaultDuration":40},
-  {"id":"reverse-lunge","name":"Reverse Lunge","category":"strength","pattern":"lunge","equipment":"bodyweight","animation":"lunge","muscles":["quads","glutes","hamstrings"],"level":2,"defaultDuration":40,"imageStart":"assets/exercises/reverse_lunge_start.webp","imageEnd":"assets/exercises/reverse_lunge_end.webp","instruction":"Paso atrás y torso controlado."},
-  {"id":"split-squat","name":"Split Squat","category":"strength","pattern":"lunge","equipment":"bodyweight","animation":"lunge","muscles":["quads","glutes"],"level":3,"defaultDuration":40,"imageStart":"assets/exercises/split_squat_start.webp","imageEnd":"assets/exercises/split_squat_end.webp","instruction":"Baja recto y mantiene el peso estable."},
-  {"id":"step-up","name":"Step-up","category":"strength","pattern":"lunge","equipment":"bench","animation":"lunge","muscles":["quads","glutes"],"level":2,"defaultDuration":40},
-  {"id":"lateral-lunge","name":"Lateral Lunge","category":"strength","pattern":"lunge","equipment":"bodyweight","animation":"lunge","muscles":["adductors","glutes","quads"],"level":3,"defaultDuration":40},
-  {"id":"glute-bridge","name":"Glute Bridge","category":"strength","pattern":"hinge","equipment":"bodyweight","animation":"birdDog","muscles":["glutes","hamstrings","core"],"level":1,"defaultDuration":40,"imageStart":"assets/exercises/glute_bridge_start.webp","imageEnd":"assets/exercises/glute_bridge_end.webp","instruction":"Empuja con talones y aprieta los glúteos."},
-  {"id":"romanian-deadlift","name":"Romanian Deadlift","category":"strength","pattern":"hinge","equipment":"dumbbell","animation":"birdDog","muscles":["hamstrings","glutes"],"level":3,"defaultDuration":40},
-  {"id":"good-morning","name":"Good Morning","category":"strength","pattern":"hinge","equipment":"bodyweight","animation":"birdDog","muscles":["hamstrings","glutes","back"],"level":2,"defaultDuration":40},
-  {"id":"hip-hinge","name":"Hip Hinge","category":"strength","pattern":"hinge","equipment":"bodyweight","animation":"birdDog","muscles":["hamstrings","glutes"],"level":1,"defaultDuration":40},
-  {"id":"bent-over-row","name":"Bent-over Row","category":"strength","pattern":"pull","equipment":"dumbbell","animation":"birdDog","muscles":["lats","upper back","biceps"],"level":2,"defaultDuration":40},
-  {"id":"prone-y-raise","name":"Prone Y Raise","category":"strength","pattern":"pull","equipment":"bodyweight","animation":"birdDog","muscles":["upper back","shoulders"],"level":1,"defaultDuration":40},
-  {"id":"reverse-snow-angel","name":"Reverse Snow Angel","category":"strength","pattern":"pull","equipment":"bodyweight","animation":"birdDog","muscles":["upper back","rear delts"],"level":2,"defaultDuration":40},
-  {"id":"towel-row","name":"Towel Row","category":"strength","pattern":"pull","equipment":"bodyweight","animation":"birdDog","muscles":["lats","biceps"],"level":2,"defaultDuration":40},
-  {"id":"bird-dog","name":"Bird Dog","category":"core","pattern":"core","equipment":"bodyweight","animation":"birdDog","muscles":["core","glutes","back"],"level":1,"defaultDuration":35,"imageStart":"assets/exercises/bird_dog_start.webp","imageEnd":"assets/exercises/bird_dog_end.webp","instruction":"Extiende brazo y pierna opuestos sin girar."},
-  {"id":"dead-bug","name":"Dead Bug","category":"core","pattern":"core","equipment":"bodyweight","animation":"deadBug","muscles":["core","hip flexors"],"level":1,"defaultDuration":35,"imageStart":"assets/exercises/dead_bug_start.webp","imageEnd":"assets/exercises/dead_bug_end.webp","instruction":"Lumbar pegada al suelo al extender."},
-  {"id":"side-plank","name":"Side Plank","category":"core","pattern":"core","equipment":"bodyweight","animation":"birdDog","muscles":["obliques","shoulders"],"level":2,"defaultDuration":35},
-  {"id":"hollow-hold","name":"Hollow Hold","category":"core","pattern":"core","equipment":"bodyweight","animation":"birdDog","muscles":["core","hip flexors"],"level":3,"defaultDuration":35},
-  {"id":"mountain-climber","name":"Mountain Climber","category":"core","pattern":"core","equipment":"bodyweight","animation":"pushup","muscles":["core","shoulders","quads"],"level":3,"defaultDuration":35},
-  {"id":"thoracic-rotation","name":"Thoracic Rotation","category":"mobility","pattern":"mobility","equipment":"bodyweight","animation":"stretch","muscles":["thoracic spine","shoulders"],"level":1,"defaultDuration":30},
-  {"id":"couch-stretch","name":"Couch Stretch","category":"mobility","pattern":"stretch","equipment":"bench","animation":"stretch","muscles":["hip flexors","quads"],"level":2,"defaultDuration":30},
-  {"id":"hamstring-reach","name":"Hamstring Reach","category":"mobility","pattern":"stretch","equipment":"bodyweight","animation":"stretch","muscles":["hamstrings","calves"],"level":1,"defaultDuration":30},
-  {"id":"child-pose","name":"Child Pose","category":"mobility","pattern":"stretch","equipment":"bodyweight","animation":"catCow","muscles":["back","hips","shoulders"],"level":1,"defaultDuration":30,"imageStart":"assets/exercises/child_pose_start.webp","instruction":"Caderas hacia talones y brazos largos."},
-  {"id":"deep-squat-hold","name":"Deep Squat Hold","category":"mobility","pattern":"mobility","equipment":"bodyweight","animation":"squat","muscles":["hips","ankles","quads"],"level":2,"defaultDuration":30}
+  {
+    "id": "cat-cow",
+    "name": "Gato-vaca",
+    "category": "warmup",
+    "pattern": "spine",
+    "equipment": "bodyweight",
+    "muscles": [
+      "erector_spinae",
+      "rectus_abdominis"
+    ],
+    "level": 1,
+    "defaultDuration": 30,
+    "mode": "time",
+    "defaultReps": null,
+    "instruction": "Redondea y extiende la columna suavemente, siguiendo tu respiración.",
+    "imageStart": "assets/exercises/repdb/cat-cow-main.webp",
+    "imageEnd": "",
+    "tags": [
+      "golf_surf"
+    ],
+    "repdbId": "cat-cow"
+  },
+  {
+    "id": "high-knees",
+    "name": "Rodillas altas",
+    "category": "warmup",
+    "pattern": "march",
+    "equipment": "bodyweight",
+    "muscles": [
+      "hip_flexors",
+      "quadriceps"
+    ],
+    "level": 1,
+    "defaultDuration": 30,
+    "mode": "time",
+    "defaultReps": null,
+    "instruction": "Eleva las rodillas alternando piernas y mantén el torso erguido.",
+    "imageStart": "assets/exercises/repdb/high-knees-main.webp",
+    "imageEnd": "",
+    "tags": [
+      "general"
+    ],
+    "repdbId": "high-knees"
+  },
+  {
+    "id": "jumping-jacks",
+    "name": "Saltos de tijera",
+    "category": "warmup",
+    "pattern": "jump",
+    "equipment": "bodyweight",
+    "muscles": [
+      "gastrocnemius",
+      "gluteus_medius",
+      "lateral_deltoid"
+    ],
+    "level": 2,
+    "defaultDuration": 30,
+    "mode": "time",
+    "defaultReps": null,
+    "instruction": "Abre brazos y piernas, aterrizando suavemente con las rodillas flexionadas.",
+    "imageStart": "assets/exercises/repdb/jumping-jacks-start.webp",
+    "imageEnd": "assets/exercises/repdb/jumping-jacks-peak.webp",
+    "tags": [
+      "general"
+    ],
+    "repdbId": "jumping-jacks"
+  },
+  {
+    "id": "bodyweight-good-morning",
+    "name": "Buenos días con peso corporal",
+    "category": "warmup",
+    "pattern": "hinge",
+    "equipment": "bodyweight",
+    "muscles": [
+      "erector_spinae",
+      "hamstrings"
+    ],
+    "level": 1,
+    "defaultDuration": 30,
+    "mode": "time",
+    "defaultReps": null,
+    "instruction": "Lleva la cadera atrás con espalda neutra y rodillas suaves.",
+    "imageStart": "assets/exercises/repdb/bodyweight-good-morning-start.webp",
+    "imageEnd": "assets/exercises/repdb/bodyweight-good-morning-peak.webp",
+    "tags": [
+      "golf"
+    ],
+    "repdbId": "bodyweight-good-morning"
+  },
+  {
+    "id": "half-kneeling-hip-flexor-rock",
+    "name": "Balanceo de flexor de cadera arrodillado",
+    "category": "warmup",
+    "pattern": "hip-mobility",
+    "equipment": "bodyweight",
+    "muscles": [
+      "hip_flexors"
+    ],
+    "level": 1,
+    "defaultDuration": 30,
+    "mode": "time",
+    "defaultReps": null,
+    "instruction": "Balancea la cadera suavemente; cambia de lado a mitad del tiempo.",
+    "imageStart": "assets/exercises/repdb/half-kneeling-hip-flexor-rock-start.webp",
+    "imageEnd": "assets/exercises/repdb/half-kneeling-hip-flexor-rock-peak.webp",
+    "tags": [
+      "golf_surf"
+    ],
+    "repdbId": "half-kneeling-hip-flexor-rock"
+  },
+  {
+    "id": "bear-crawl",
+    "name": "Caminata del oso",
+    "category": "warmup",
+    "pattern": "crawl",
+    "equipment": "bodyweight",
+    "muscles": [
+      "anterior_deltoid",
+      "rectus_abdominis"
+    ],
+    "level": 2,
+    "defaultDuration": 30,
+    "mode": "time",
+    "defaultReps": null,
+    "instruction": "Avanza con pasos cortos, rodillas bajas y abdomen firme.",
+    "imageStart": "assets/exercises/repdb/bear-crawl-start.webp",
+    "imageEnd": "assets/exercises/repdb/bear-crawl-peak.webp",
+    "tags": [
+      "surf"
+    ],
+    "repdbId": "bear-crawl"
+  },
+  {
+    "id": "bodyweight-squat",
+    "name": "Sentadilla con peso corporal",
+    "category": "strength",
+    "pattern": "squat",
+    "equipment": "bodyweight",
+    "muscles": [
+      "gluteus_maximus",
+      "quadriceps"
+    ],
+    "level": 1,
+    "defaultDuration": 30,
+    "mode": "reps",
+    "defaultReps": 12,
+    "instruction": "Baja la cadera con talones apoyados y rodillas alineadas.",
+    "imageStart": "assets/exercises/repdb/bodyweight-squat-start.webp",
+    "imageEnd": "assets/exercises/repdb/bodyweight-squat-peak.webp",
+    "tags": [
+      "general"
+    ],
+    "repdbId": "bodyweight-squat"
+  },
+  {
+    "id": "goblet-squat",
+    "name": "Sentadilla Goblet",
+    "category": "strength",
+    "pattern": "squat",
+    "equipment": "kettlebell",
+    "muscles": [
+      "gluteus_maximus",
+      "quadriceps"
+    ],
+    "level": 2,
+    "defaultDuration": 30,
+    "mode": "reps",
+    "defaultReps": 12,
+    "instruction": "Cadera atrás, rodillas alineadas y pecho alto.",
+    "imageStart": "assets/exercises/repdb/goblet-squat-start.webp",
+    "imageEnd": "assets/exercises/repdb/goblet-squat-peak.webp",
+    "tags": [
+      "golf_surf"
+    ],
+    "repdbId": "goblet-squat"
+  },
+  {
+    "id": "sumo-squat",
+    "name": "Sentadilla sumo",
+    "category": "strength",
+    "pattern": "squat",
+    "equipment": "bodyweight",
+    "muscles": [
+      "quadriceps",
+      "gluteus_maximus"
+    ],
+    "level": 1,
+    "defaultDuration": 30,
+    "mode": "reps",
+    "defaultReps": 12,
+    "instruction": "Abre los pies y baja siguiendo la dirección de las rodillas.",
+    "imageStart": "",
+    "imageEnd": "",
+    "tags": [
+      "general"
+    ]
+  },
+  {
+    "id": "bodyweight-reverse-lunge",
+    "name": "Zancada atrás",
+    "category": "strength",
+    "pattern": "lunge",
+    "equipment": "bodyweight",
+    "muscles": [
+      "gluteus_maximus",
+      "quadriceps"
+    ],
+    "level": 2,
+    "defaultDuration": 30,
+    "mode": "reps",
+    "defaultReps": 10,
+    "instruction": "Da un paso atrás con control; completa las repeticiones por lado.",
+    "imageStart": "assets/exercises/repdb/bodyweight-reverse-lunge-start.webp",
+    "imageEnd": "assets/exercises/repdb/bodyweight-reverse-lunge-peak.webp",
+    "tags": [
+      "golf_surf"
+    ],
+    "repdbId": "bodyweight-reverse-lunge"
+  },
+  {
+    "id": "split-squat",
+    "name": "Sentadilla en tijera",
+    "category": "strength",
+    "pattern": "lunge",
+    "equipment": "bodyweight",
+    "muscles": [
+      "gluteus_maximus",
+      "quadriceps"
+    ],
+    "level": 2,
+    "defaultDuration": 30,
+    "mode": "reps",
+    "defaultReps": 10,
+    "instruction": "Baja verticalmente con pies separados; completa las repeticiones por lado.",
+    "imageStart": "assets/exercises/repdb/split-squat-start.webp",
+    "imageEnd": "assets/exercises/repdb/split-squat-peak.webp",
+    "tags": [
+      "golf"
+    ],
+    "repdbId": "split-squat"
+  },
+  {
+    "id": "kettlebell-bulgarian-split-squat",
+    "name": "Sentadilla búlgara con kettlebell",
+    "category": "strength",
+    "pattern": "lunge",
+    "equipment": "kettlebell_bench",
+    "muscles": [
+      "gluteus_maximus",
+      "quadriceps"
+    ],
+    "level": 3,
+    "defaultDuration": 30,
+    "mode": "reps",
+    "defaultReps": 8,
+    "instruction": "Apoya el pie trasero; baja con control y repite por lado.",
+    "imageStart": "assets/exercises/repdb/kettlebell-bulgarian-split-squat-start.webp",
+    "imageEnd": "assets/exercises/repdb/kettlebell-bulgarian-split-squat-peak.webp",
+    "tags": [
+      "golf"
+    ],
+    "repdbId": "kettlebell-bulgarian-split-squat"
+  },
+  {
+    "id": "kettlebell-goblet-lunge",
+    "name": "Zancada Goblet con kettlebell",
+    "category": "strength",
+    "pattern": "lunge",
+    "equipment": "kettlebell",
+    "muscles": [
+      "gluteus_maximus",
+      "quadriceps"
+    ],
+    "level": 2,
+    "defaultDuration": 30,
+    "mode": "reps",
+    "defaultReps": 10,
+    "instruction": "Sujeta la pesa al pecho; completa las repeticiones por lado.",
+    "imageStart": "assets/exercises/repdb/kettlebell-goblet-lunge-start.webp",
+    "imageEnd": "assets/exercises/repdb/kettlebell-goblet-lunge-peak.webp",
+    "tags": [
+      "general"
+    ],
+    "repdbId": "kettlebell-goblet-lunge"
+  },
+  {
+    "id": "step-ups",
+    "name": "Subidas al banco",
+    "category": "strength",
+    "pattern": "step",
+    "equipment": "bench",
+    "muscles": [
+      "gluteus_maximus",
+      "quadriceps"
+    ],
+    "level": 2,
+    "defaultDuration": 30,
+    "mode": "reps",
+    "defaultReps": 10,
+    "instruction": "Apoya todo el pie y sube; completa las repeticiones por lado.",
+    "imageStart": "assets/exercises/repdb/step-ups-start.webp",
+    "imageEnd": "assets/exercises/repdb/step-ups-peak.webp",
+    "tags": [
+      "golf_surf"
+    ],
+    "repdbId": "step-ups"
+  },
+  {
+    "id": "glute-bridge",
+    "name": "Puente de glúteos",
+    "category": "strength",
+    "pattern": "bridge",
+    "equipment": "bodyweight",
+    "muscles": [
+      "gluteus_maximus"
+    ],
+    "level": 1,
+    "defaultDuration": 30,
+    "mode": "reps",
+    "defaultReps": 12,
+    "instruction": "Empuja con los talones y eleva la cadera sin arquearte.",
+    "imageStart": "assets/exercises/repdb/glute-bridge-start.webp",
+    "imageEnd": "assets/exercises/repdb/glute-bridge-peak.webp",
+    "tags": [
+      "general"
+    ],
+    "repdbId": "glute-bridge"
+  },
+  {
+    "id": "glute-bridge-hold",
+    "name": "Puente de glúteos isométrico",
+    "category": "strength",
+    "pattern": "bridge",
+    "equipment": "bodyweight",
+    "muscles": [
+      "gluteus_maximus"
+    ],
+    "level": 1,
+    "defaultDuration": 30,
+    "mode": "time",
+    "defaultReps": null,
+    "instruction": "Mantén la cadera elevada, glúteos activos y costillas recogidas.",
+    "imageStart": "assets/exercises/repdb/glute-bridge-hold-main.webp",
+    "imageEnd": "",
+    "tags": [
+      "general"
+    ],
+    "repdbId": "glute-bridge-hold"
+  },
+  {
+    "id": "romanian-deadlift",
+    "name": "Peso muerto rumano con kettlebell",
+    "category": "strength",
+    "pattern": "hinge",
+    "equipment": "kettlebell",
+    "muscles": [
+      "hamstrings",
+      "gluteus_maximus"
+    ],
+    "level": 2,
+    "defaultDuration": 30,
+    "mode": "reps",
+    "defaultReps": 12,
+    "instruction": "Lleva la cadera atrás y baja la pesa cerca de las piernas.",
+    "imageStart": "",
+    "imageEnd": "",
+    "tags": [
+      "golf"
+    ]
+  },
+  {
+    "id": "one-arm-single-leg-kettlebell-romanian-deadlift",
+    "name": "Peso muerto rumano a una pierna",
+    "category": "strength",
+    "pattern": "hinge",
+    "equipment": "kettlebell",
+    "muscles": [
+      "gluteus_maximus",
+      "hamstrings"
+    ],
+    "level": 3,
+    "defaultDuration": 30,
+    "mode": "reps",
+    "defaultReps": 8,
+    "instruction": "Inclina el torso sin girar la cadera; repite por lado.",
+    "imageStart": "assets/exercises/repdb/one-arm-single-leg-kettlebell-romanian-deadlift-start.webp",
+    "imageEnd": "assets/exercises/repdb/one-arm-single-leg-kettlebell-romanian-deadlift-peak.webp",
+    "tags": [
+      "golf_surf"
+    ],
+    "repdbId": "one-arm-single-leg-kettlebell-romanian-deadlift"
+  },
+  {
+    "id": "kettlebell-deadlift",
+    "name": "Peso muerto con kettlebell",
+    "category": "strength",
+    "pattern": "hinge",
+    "equipment": "kettlebell",
+    "muscles": [
+      "erector_spinae",
+      "gluteus_maximus",
+      "hamstrings"
+    ],
+    "level": 2,
+    "defaultDuration": 30,
+    "mode": "reps",
+    "defaultReps": 12,
+    "instruction": "Empuja el suelo y extiende la cadera con espalda neutra.",
+    "imageStart": "assets/exercises/repdb/kettlebell-deadlift-start.webp",
+    "imageEnd": "assets/exercises/repdb/kettlebell-deadlift-peak.webp",
+    "tags": [
+      "general"
+    ],
+    "repdbId": "kettlebell-deadlift"
+  },
+  {
+    "id": "kettlebell-rotational-lunge",
+    "name": "Zancada rotacional con kettlebell",
+    "category": "strength",
+    "pattern": "rotation-lunge",
+    "equipment": "kettlebell",
+    "muscles": [
+      "gluteus_maximus",
+      "quadriceps"
+    ],
+    "level": 3,
+    "defaultDuration": 30,
+    "mode": "reps",
+    "defaultReps": 8,
+    "instruction": "Da una zancada lateral y gira con control; repite por lado.",
+    "imageStart": "assets/exercises/repdb/kettlebell-rotational-lunge-start.webp",
+    "imageEnd": "assets/exercises/repdb/kettlebell-rotational-lunge-peak.webp",
+    "tags": [
+      "golf"
+    ],
+    "repdbId": "kettlebell-rotational-lunge"
+  },
+  {
+    "id": "knee-push-ups",
+    "name": "Flexiones de rodillas",
+    "category": "strength",
+    "pattern": "horizontal-push",
+    "equipment": "bodyweight",
+    "muscles": [
+      "pectoralis_major"
+    ],
+    "level": 1,
+    "defaultDuration": 30,
+    "mode": "reps",
+    "defaultReps": 10,
+    "instruction": "Mantén hombros, cadera y rodillas alineados al bajar el pecho.",
+    "imageStart": "assets/exercises/repdb/knee-push-ups-start.webp",
+    "imageEnd": "assets/exercises/repdb/knee-push-ups-peak.webp",
+    "tags": [
+      "general"
+    ],
+    "repdbId": "knee-push-ups"
+  },
+  {
+    "id": "incline-push-ups",
+    "name": "Flexiones inclinadas",
+    "category": "strength",
+    "pattern": "horizontal-push",
+    "equipment": "bench",
+    "muscles": [
+      "pectoralis_major"
+    ],
+    "level": 1,
+    "defaultDuration": 30,
+    "mode": "reps",
+    "defaultReps": 10,
+    "instruction": "Apoya las manos en el banco y baja con cuerpo alineado.",
+    "imageStart": "assets/exercises/repdb/incline-push-ups-start.webp",
+    "imageEnd": "assets/exercises/repdb/incline-push-ups-peak.webp",
+    "tags": [
+      "general"
+    ],
+    "repdbId": "incline-push-ups"
+  },
+  {
+    "id": "push-up",
+    "name": "Flexiones",
+    "category": "strength",
+    "pattern": "horizontal-push",
+    "equipment": "bodyweight",
+    "muscles": [
+      "pectoralis_major",
+      "triceps_brachii"
+    ],
+    "level": 2,
+    "defaultDuration": 30,
+    "mode": "reps",
+    "defaultReps": 10,
+    "instruction": "Mantén el cuerpo alineado y acerca el pecho al suelo.",
+    "imageStart": "assets/exercises/repdb/push-up-start.webp",
+    "imageEnd": "assets/exercises/repdb/push-up-peak.webp",
+    "tags": [
+      "general"
+    ],
+    "repdbId": "push-up"
+  },
+  {
+    "id": "diamond-push-ups",
+    "name": "Flexiones en diamante",
+    "category": "strength",
+    "pattern": "horizontal-push",
+    "equipment": "bodyweight",
+    "muscles": [
+      "pectoralis_major",
+      "triceps_brachii"
+    ],
+    "level": 3,
+    "defaultDuration": 30,
+    "mode": "reps",
+    "defaultReps": 8,
+    "instruction": "Acerca las manos bajo el pecho y flexiona con control.",
+    "imageStart": "assets/exercises/repdb/diamond-push-ups-start.webp",
+    "imageEnd": "assets/exercises/repdb/diamond-push-ups-peak.webp",
+    "tags": [
+      "general"
+    ],
+    "repdbId": "diamond-push-ups"
+  },
+  {
+    "id": "pike-push-ups",
+    "name": "Flexiones en pica",
+    "category": "strength",
+    "pattern": "vertical-push",
+    "equipment": "bodyweight",
+    "muscles": [
+      "anterior_deltoid",
+      "lateral_deltoid"
+    ],
+    "level": 3,
+    "defaultDuration": 30,
+    "mode": "reps",
+    "defaultReps": 8,
+    "instruction": "Eleva la cadera y baja la cabeza entre las manos.",
+    "imageStart": "assets/exercises/repdb/pike-push-ups-start.webp",
+    "imageEnd": "assets/exercises/repdb/pike-push-ups-peak.webp",
+    "tags": [
+      "surf"
+    ],
+    "repdbId": "pike-push-ups"
+  },
+  {
+    "id": "one-arm-kettlebell-row",
+    "name": "Remo con kettlebell a un brazo",
+    "category": "strength",
+    "pattern": "pull",
+    "equipment": "kettlebell",
+    "muscles": [
+      "latissimus_dorsi",
+      "rhomboids"
+    ],
+    "level": 2,
+    "defaultDuration": 30,
+    "mode": "reps",
+    "defaultReps": 12,
+    "instruction": "Lleva el codo hacia la cadera; completa las repeticiones por lado.",
+    "imageStart": "assets/exercises/repdb/one-arm-kettlebell-row-start.webp",
+    "imageEnd": "assets/exercises/repdb/one-arm-kettlebell-row-peak.webp",
+    "tags": [
+      "surf"
+    ],
+    "repdbId": "one-arm-kettlebell-row"
+  },
+  {
+    "id": "one-arm-kettlebell-floor-press",
+    "name": "Press de suelo con kettlebell",
+    "category": "strength",
+    "pattern": "horizontal-push",
+    "equipment": "kettlebell",
+    "muscles": [
+      "pectoralis_major"
+    ],
+    "level": 2,
+    "defaultDuration": 30,
+    "mode": "reps",
+    "defaultReps": 10,
+    "instruction": "Empuja la pesa sin girar el torso; repite por lado.",
+    "imageStart": "assets/exercises/repdb/one-arm-kettlebell-floor-press-start.webp",
+    "imageEnd": "assets/exercises/repdb/one-arm-kettlebell-floor-press-peak.webp",
+    "tags": [
+      "general"
+    ],
+    "repdbId": "one-arm-kettlebell-floor-press"
+  },
+  {
+    "id": "kettlebell-halo",
+    "name": "Halo con kettlebell",
+    "category": "strength",
+    "pattern": "shoulder-mobility",
+    "equipment": "kettlebell",
+    "muscles": [
+      "lateral_deltoid"
+    ],
+    "level": 2,
+    "defaultDuration": 30,
+    "mode": "reps",
+    "defaultReps": 10,
+    "instruction": "Rodea la cabeza con la pesa, alternando sentidos sin mover el torso.",
+    "imageStart": "assets/exercises/repdb/kettlebell-halo-start.webp",
+    "imageEnd": "assets/exercises/repdb/kettlebell-halo-peak.webp",
+    "tags": [
+      "surf"
+    ],
+    "repdbId": "kettlebell-halo"
+  },
+  {
+    "id": "kettlebell-overhead-tricep-extension",
+    "name": "Extensión de tríceps con kettlebell",
+    "category": "strength",
+    "pattern": "elbow-extension",
+    "equipment": "kettlebell",
+    "muscles": [
+      "triceps_brachii"
+    ],
+    "level": 2,
+    "defaultDuration": 30,
+    "mode": "reps",
+    "defaultReps": 12,
+    "instruction": "Mantén los codos cerca de la cabeza y extiende suavemente.",
+    "imageStart": "assets/exercises/repdb/kettlebell-overhead-tricep-extension-start.webp",
+    "imageEnd": "assets/exercises/repdb/kettlebell-overhead-tricep-extension-peak.webp",
+    "tags": [
+      "general"
+    ],
+    "repdbId": "kettlebell-overhead-tricep-extension"
+  },
+  {
+    "id": "dead-bug",
+    "name": "Dead Bug",
+    "category": "core",
+    "pattern": "anti-extension-dynamic",
+    "equipment": "bodyweight",
+    "muscles": [
+      "rectus_abdominis",
+      "transverse_abdominis"
+    ],
+    "level": 1,
+    "defaultDuration": 30,
+    "mode": "reps",
+    "defaultReps": 10,
+    "instruction": "Mantén la zona lumbar pegada al suelo; repite por lado.",
+    "imageStart": "assets/exercises/repdb/dead-bug-start.webp",
+    "imageEnd": "assets/exercises/repdb/dead-bug-peak.webp",
+    "tags": [
+      "golf_surf"
+    ],
+    "repdbId": "dead-bug"
+  },
+  {
+    "id": "bird-dog",
+    "name": "Bird Dog",
+    "category": "core",
+    "pattern": "anti-rotation",
+    "equipment": "bodyweight",
+    "muscles": [
+      "erector_spinae",
+      "transverse_abdominis"
+    ],
+    "level": 1,
+    "defaultDuration": 30,
+    "mode": "reps",
+    "defaultReps": 10,
+    "instruction": "Extiende brazo y pierna opuestos sin girar; repite por lado.",
+    "imageStart": "assets/exercises/repdb/bird-dog-start.webp",
+    "imageEnd": "assets/exercises/repdb/bird-dog-peak.webp",
+    "tags": [
+      "golf_surf"
+    ],
+    "repdbId": "bird-dog"
+  },
+  {
+    "id": "bird-dog-hold",
+    "name": "Bird Dog isométrico",
+    "category": "core",
+    "pattern": "anti-rotation",
+    "equipment": "bodyweight",
+    "muscles": [
+      "erector_spinae",
+      "rectus_abdominis"
+    ],
+    "level": 1,
+    "defaultDuration": 30,
+    "mode": "time",
+    "defaultReps": null,
+    "instruction": "Mantén brazo y pierna opuestos extendidos; cambia a mitad del tiempo.",
+    "imageStart": "assets/exercises/repdb/bird-dog-hold-main.webp",
+    "imageEnd": "",
+    "tags": [
+      "general"
+    ],
+    "repdbId": "bird-dog-hold"
+  },
+  {
+    "id": "plank",
+    "name": "Plancha",
+    "category": "core",
+    "pattern": "core-hold",
+    "equipment": "bodyweight",
+    "muscles": [
+      "rectus_abdominis",
+      "transverse_abdominis"
+    ],
+    "level": 1,
+    "defaultDuration": 30,
+    "mode": "time",
+    "defaultReps": null,
+    "instruction": "Aprieta abdomen y glúteos, manteniendo el cuerpo en línea.",
+    "imageStart": "assets/exercises/repdb/plank-main.webp",
+    "imageEnd": "",
+    "tags": [
+      "general"
+    ],
+    "repdbId": "plank"
+  },
+  {
+    "id": "side-plank",
+    "name": "Plancha lateral",
+    "category": "core",
+    "pattern": "core-hold",
+    "equipment": "bodyweight",
+    "muscles": [
+      "obliques",
+      "transverse_abdominis"
+    ],
+    "level": 2,
+    "defaultDuration": 30,
+    "mode": "time",
+    "defaultReps": null,
+    "instruction": "Eleva la cadera sin girarte; cambia de lado a mitad del tiempo.",
+    "imageStart": "assets/exercises/repdb/side-plank-main.webp",
+    "imageEnd": "",
+    "tags": [
+      "golf_surf"
+    ],
+    "repdbId": "side-plank"
+  },
+  {
+    "id": "hollow-body-hold",
+    "name": "Hollow hold",
+    "category": "core",
+    "pattern": "core-hold",
+    "equipment": "bodyweight",
+    "muscles": [
+      "rectus_abdominis"
+    ],
+    "level": 2,
+    "defaultDuration": 30,
+    "mode": "time",
+    "defaultReps": null,
+    "instruction": "Mantén la zona lumbar apoyada y respira sin perder tensión.",
+    "imageStart": "assets/exercises/repdb/hollow-body-hold-main.webp",
+    "imageEnd": "",
+    "tags": [
+      "surf"
+    ],
+    "repdbId": "hollow-body-hold"
+  },
+  {
+    "id": "lying-leg-raise",
+    "name": "Elevación de piernas tumbado",
+    "category": "core",
+    "pattern": "leg-raise",
+    "equipment": "bodyweight",
+    "muscles": [
+      "hip_flexors",
+      "rectus_abdominis"
+    ],
+    "level": 2,
+    "defaultDuration": 30,
+    "mode": "reps",
+    "defaultReps": 12,
+    "instruction": "Baja las piernas lentamente sin separar la zona lumbar del suelo.",
+    "imageStart": "assets/exercises/repdb/lying-leg-raise-start.webp",
+    "imageEnd": "assets/exercises/repdb/lying-leg-raise-peak.webp",
+    "tags": [
+      "general"
+    ],
+    "repdbId": "lying-leg-raise"
+  },
+  {
+    "id": "scissor-kicks",
+    "name": "Tijeras de piernas",
+    "category": "core",
+    "pattern": "leg-raise",
+    "equipment": "bodyweight",
+    "muscles": [
+      "hip_flexors",
+      "rectus_abdominis"
+    ],
+    "level": 2,
+    "defaultDuration": 30,
+    "mode": "time",
+    "defaultReps": null,
+    "instruction": "Alterna las piernas con movimientos cortos y zona lumbar apoyada.",
+    "imageStart": "assets/exercises/repdb/scissor-kicks-start.webp",
+    "imageEnd": "assets/exercises/repdb/scissor-kicks-peak.webp",
+    "tags": [
+      "general"
+    ],
+    "repdbId": "scissor-kicks"
+  },
+  {
+    "id": "kettlebell-russian-twist",
+    "name": "Giro ruso con kettlebell",
+    "category": "core",
+    "pattern": "rotation",
+    "equipment": "kettlebell",
+    "muscles": [
+      "obliques"
+    ],
+    "level": 2,
+    "defaultDuration": 30,
+    "mode": "reps",
+    "defaultReps": 10,
+    "instruction": "Gira el torso con control; completa las repeticiones por lado.",
+    "imageStart": "assets/exercises/repdb/kettlebell-russian-twist-start.webp",
+    "imageEnd": "assets/exercises/repdb/kettlebell-russian-twist-peak.webp",
+    "tags": [
+      "golf"
+    ],
+    "repdbId": "kettlebell-russian-twist"
+  },
+  {
+    "id": "suitcase-carry",
+    "name": "Paseo del maletín",
+    "category": "core",
+    "pattern": "carry",
+    "equipment": "kettlebell",
+    "muscles": [
+      "forearm_flexors",
+      "obliques",
+      "quadratus_lumborum"
+    ],
+    "level": 2,
+    "defaultDuration": 30,
+    "mode": "time",
+    "defaultReps": null,
+    "instruction": "Camina erguido sin inclinarte; cambia de mano a mitad del tiempo.",
+    "imageStart": "assets/exercises/repdb/suitcase-carry-main.webp",
+    "imageEnd": "",
+    "tags": [
+      "golf"
+    ],
+    "repdbId": "suitcase-carry"
+  },
+  {
+    "id": "mountain-climbers",
+    "name": "Mountain Climbers",
+    "category": "conditioning",
+    "pattern": "climber",
+    "equipment": "bodyweight",
+    "muscles": [
+      "hip_flexors",
+      "rectus_abdominis"
+    ],
+    "level": 1,
+    "defaultDuration": 30,
+    "mode": "time",
+    "defaultReps": null,
+    "instruction": "Acerca las rodillas al pecho alternadamente sin elevar la cadera.",
+    "imageStart": "assets/exercises/repdb/mountain-climbers-start.webp",
+    "imageEnd": "assets/exercises/repdb/mountain-climbers-peak.webp",
+    "tags": [
+      "general"
+    ],
+    "repdbId": "mountain-climbers"
+  },
+  {
+    "id": "jump-squat",
+    "name": "Sentadilla con salto",
+    "category": "conditioning",
+    "pattern": "jump",
+    "equipment": "bodyweight",
+    "muscles": [
+      "gluteus_maximus",
+      "quadriceps"
+    ],
+    "level": 2,
+    "defaultDuration": 30,
+    "mode": "time",
+    "defaultReps": null,
+    "instruction": "Salta desde la sentadilla y aterriza suavemente con rodillas flexionadas.",
+    "imageStart": "assets/exercises/repdb/jump-squat-start.webp",
+    "imageEnd": "assets/exercises/repdb/jump-squat-peak.webp",
+    "tags": [
+      "golf_surf"
+    ],
+    "repdbId": "jump-squat"
+  },
+  {
+    "id": "burpees",
+    "name": "Burpees",
+    "category": "conditioning",
+    "pattern": "burpee",
+    "equipment": "bodyweight",
+    "muscles": [
+      "gluteus_maximus",
+      "pectoralis_major",
+      "quadriceps"
+    ],
+    "level": 3,
+    "defaultDuration": 30,
+    "mode": "time",
+    "defaultReps": null,
+    "instruction": "Apoya las manos, lleva los pies atrás y vuelve con control.",
+    "imageStart": "assets/exercises/repdb/burpees-main.webp",
+    "imageEnd": "",
+    "tags": [
+      "general"
+    ],
+    "repdbId": "burpees"
+  },
+  {
+    "id": "kettlebell-swing",
+    "name": "Kettlebell Swing",
+    "category": "conditioning",
+    "pattern": "ballistic-hinge",
+    "equipment": "kettlebell",
+    "muscles": [
+      "gluteus_maximus",
+      "hamstrings"
+    ],
+    "level": 3,
+    "defaultDuration": 30,
+    "mode": "time",
+    "defaultReps": null,
+    "instruction": "Impulsa con la cadera; los brazos solo guían la pesa.",
+    "imageStart": "assets/exercises/repdb/kettlebell-swing-start.webp",
+    "imageEnd": "assets/exercises/repdb/kettlebell-swing-peak.webp",
+    "tags": [
+      "golf_surf"
+    ],
+    "repdbId": "kettlebell-swing"
+  },
+  {
+    "id": "kettlebell-sumo-high-pull",
+    "name": "Tirón alto sumo con kettlebell",
+    "category": "conditioning",
+    "pattern": "ballistic-pull",
+    "equipment": "kettlebell",
+    "muscles": [
+      "adductors",
+      "lateral_deltoid",
+      "trapezius"
+    ],
+    "level": 3,
+    "defaultDuration": 30,
+    "mode": "time",
+    "defaultReps": null,
+    "instruction": "Extiende la cadera y guía la pesa cerca del cuerpo.",
+    "imageStart": "assets/exercises/repdb/kettlebell-sumo-high-pull-start.webp",
+    "imageEnd": "assets/exercises/repdb/kettlebell-sumo-high-pull-peak.webp",
+    "tags": [
+      "general"
+    ],
+    "repdbId": "kettlebell-sumo-high-pull"
+  },
+  {
+    "id": "kettlebell-swing-clean",
+    "name": "Swing y cargada con kettlebell",
+    "category": "conditioning",
+    "pattern": "ballistic-hinge",
+    "equipment": "kettlebell",
+    "muscles": [
+      "gluteus_maximus",
+      "hamstrings"
+    ],
+    "level": 3,
+    "defaultDuration": 30,
+    "mode": "time",
+    "defaultReps": null,
+    "instruction": "Recoge la pesa suavemente junto al hombro; cambia a mitad del tiempo.",
+    "imageStart": "assets/exercises/repdb/kettlebell-swing-clean-start.webp",
+    "imageEnd": "assets/exercises/repdb/kettlebell-swing-clean-peak.webp",
+    "tags": [
+      "general"
+    ],
+    "repdbId": "kettlebell-swing-clean"
+  },
+  {
+    "id": "pilates-spine-twist",
+    "name": "Giro de columna de Pilates",
+    "category": "mobility",
+    "pattern": "spine",
+    "equipment": "bodyweight",
+    "muscles": [
+      "obliques"
+    ],
+    "level": 1,
+    "defaultDuration": 30,
+    "mode": "time",
+    "defaultReps": null,
+    "instruction": "Crece desde la coronilla y gira el torso sin mover la pelvis.",
+    "imageStart": "assets/exercises/repdb/pilates-spine-twist-start.webp",
+    "imageEnd": "assets/exercises/repdb/pilates-spine-twist-peak.webp",
+    "tags": [
+      "golf"
+    ],
+    "repdbId": "pilates-spine-twist"
+  },
+  {
+    "id": "butterfly-stretch",
+    "name": "Estiramiento de mariposa",
+    "category": "mobility",
+    "pattern": "hips",
+    "equipment": "bodyweight",
+    "muscles": [
+      "adductors"
+    ],
+    "level": 1,
+    "defaultDuration": 30,
+    "mode": "time",
+    "defaultReps": null,
+    "instruction": "Junta las plantas de los pies y deja caer las rodillas suavemente.",
+    "imageStart": "assets/exercises/repdb/butterfly-stretch-main.webp",
+    "imageEnd": "",
+    "tags": [
+      "golf_surf"
+    ],
+    "repdbId": "butterfly-stretch"
+  },
+  {
+    "id": "pigeon-stretch",
+    "name": "Estiramiento de la paloma",
+    "category": "mobility",
+    "pattern": "hips",
+    "equipment": "bodyweight",
+    "muscles": [
+      "gluteus_maximus"
+    ],
+    "level": 1,
+    "defaultDuration": 30,
+    "mode": "time",
+    "defaultReps": null,
+    "instruction": "Mantén la pelvis estable; cambia de lado a mitad del tiempo.",
+    "imageStart": "assets/exercises/repdb/pigeon-stretch-main.webp",
+    "imageEnd": "",
+    "tags": [
+      "golf_surf"
+    ],
+    "repdbId": "pigeon-stretch"
+  },
+  {
+    "id": "kneeling-hip-flexor-stretch",
+    "name": "Estiramiento de flexores de cadera arrodillado",
+    "category": "mobility",
+    "pattern": "hip-flexor",
+    "equipment": "bodyweight",
+    "muscles": [
+      "hip_flexors"
+    ],
+    "level": 1,
+    "defaultDuration": 30,
+    "mode": "time",
+    "defaultReps": null,
+    "instruction": "Recoge la pelvis sin arquearte; cambia de lado a mitad del tiempo.",
+    "imageStart": "assets/exercises/repdb/kneeling-hip-flexor-stretch-main.webp",
+    "imageEnd": "",
+    "tags": [
+      "golf_surf"
+    ],
+    "repdbId": "kneeling-hip-flexor-stretch"
+  },
+  {
+    "id": "camel-pose",
+    "name": "Postura del camello",
+    "category": "mobility",
+    "pattern": "extension",
+    "equipment": "bodyweight",
+    "muscles": [
+      "erector_spinae",
+      "hip_flexors"
+    ],
+    "level": 2,
+    "defaultDuration": 30,
+    "mode": "time",
+    "defaultReps": null,
+    "instruction": "Abre el pecho lentamente, manteniendo la cadera sobre las rodillas.",
+    "imageStart": "assets/exercises/repdb/camel-pose-main.webp",
+    "imageEnd": "",
+    "tags": [
+      "surf"
+    ],
+    "repdbId": "camel-pose"
+  },
+  {
+    "id": "childs-pose",
+    "name": "Postura del niño",
+    "category": "stretch",
+    "pattern": "back-stretch",
+    "equipment": "bodyweight",
+    "muscles": [
+      "erector_spinae",
+      "latissimus_dorsi"
+    ],
+    "level": 1,
+    "defaultDuration": 30,
+    "mode": "time",
+    "defaultReps": null,
+    "instruction": "Lleva la cadera hacia los talones y alarga los brazos.",
+    "imageStart": "assets/exercises/repdb/childs-pose-main.webp",
+    "imageEnd": "",
+    "tags": [
+      "surf"
+    ],
+    "repdbId": "childs-pose"
+  },
+  {
+    "id": "cobra-stretch",
+    "name": "Estiramiento de la cobra",
+    "category": "stretch",
+    "pattern": "extension",
+    "equipment": "bodyweight",
+    "muscles": [
+      "rectus_abdominis"
+    ],
+    "level": 1,
+    "defaultDuration": 30,
+    "mode": "time",
+    "defaultReps": null,
+    "instruction": "Eleva el pecho suavemente sin forzar la zona lumbar.",
+    "imageStart": "assets/exercises/repdb/cobra-stretch-main.webp",
+    "imageEnd": "",
+    "tags": [
+      "surf"
+    ],
+    "repdbId": "cobra-stretch"
+  },
+  {
+    "id": "cross-body-shoulder-stretch",
+    "name": "Estiramiento de hombro cruzado",
+    "category": "stretch",
+    "pattern": "shoulder-stretch",
+    "equipment": "bodyweight",
+    "muscles": [
+      "posterior_deltoid"
+    ],
+    "level": 1,
+    "defaultDuration": 30,
+    "mode": "time",
+    "defaultReps": null,
+    "instruction": "Acerca el brazo al pecho; cambia a mitad del tiempo.",
+    "imageStart": "assets/exercises/repdb/cross-body-shoulder-stretch-main.webp",
+    "imageEnd": "",
+    "tags": [
+      "surf"
+    ],
+    "repdbId": "cross-body-shoulder-stretch"
+  },
+  {
+    "id": "overhead-triceps-stretch",
+    "name": "Estiramiento de tríceps sobre la cabeza",
+    "category": "stretch",
+    "pattern": "arm-stretch",
+    "equipment": "bodyweight",
+    "muscles": [
+      "triceps_brachii"
+    ],
+    "level": 1,
+    "defaultDuration": 30,
+    "mode": "time",
+    "defaultReps": null,
+    "instruction": "Flexiona el codo sobre la cabeza; cambia a mitad del tiempo.",
+    "imageStart": "assets/exercises/repdb/overhead-triceps-stretch-main.webp",
+    "imageEnd": "",
+    "tags": [
+      "general"
+    ],
+    "repdbId": "overhead-triceps-stretch"
+  },
+  {
+    "id": "neck-side-stretch",
+    "name": "Estiramiento lateral de cuello",
+    "category": "stretch",
+    "pattern": "neck-stretch",
+    "equipment": "bodyweight",
+    "muscles": [
+      "trapezius"
+    ],
+    "level": 1,
+    "defaultDuration": 30,
+    "mode": "time",
+    "defaultReps": null,
+    "instruction": "Inclina suavemente la cabeza; cambia de lado a mitad del tiempo.",
+    "imageStart": "assets/exercises/repdb/neck-side-stretch-main.webp",
+    "imageEnd": "",
+    "tags": [
+      "general"
+    ],
+    "repdbId": "neck-side-stretch"
+  }
 ]
