@@ -911,9 +911,18 @@ loadExerciseCatalog()
 
 updateTimerView();
 
-if("serviceWorker" in navigator){
+if("serviceWorker" in navigator && ["http:", "https:"].includes(location.protocol)){
   window.addEventListener("load", () => {
-    navigator.serviceWorker.register("service-worker.js").catch(error => {
+    const isLocalhost = ["localhost", "127.0.0.1", "[::1]"].includes(location.hostname) || location.hostname.endsWith(".localhost");
+    if(isLocalhost){
+      // Remove this app's older local registration without affecting other local projects.
+      const appScope = new URL("./", location.href).href;
+      navigator.serviceWorker.getRegistrations()
+        .then(registrations => Promise.all(registrations.filter(registration => registration.scope === appScope).map(registration => registration.unregister())))
+        .catch(error => console.warn("No se pudo desactivar el modo sin conexión local.", error));
+      return;
+    }
+    navigator.serviceWorker.register("service-worker.js", {updateViaCache:"none"}).catch(error => {
       console.warn("No se pudo registrar el modo sin conexión.", error);
     });
   });

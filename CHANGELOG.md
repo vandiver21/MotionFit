@@ -1,5 +1,19 @@
 # MotionFit Changelog
 
+## 1.0.0 — MotionFit V1
+
+- First stable MotionFit release
+- Curated V1 exercise library
+- RepDB exercise illustrations
+- Bodyweight, kettlebell and bench workouts
+- Adjustable routine blocks
+- Time and reps workout modes
+- Exercise substitutions
+- Live workout timer and progress
+- Warm-up/stretch skip controls
+- Local workout history
+- PWA support
+
 ## 0.10.0 — Approved Library
 
 - Improved exercise illustration framing and mobile image display
